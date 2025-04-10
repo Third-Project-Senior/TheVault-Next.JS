@@ -1,0 +1,76 @@
+.sidebar {
+  width: 250px;
+  height: 100vh; /* Full height of the viewport */
+  background-color: #ffffff; /* Match the navbar background */
+  color: #333; /* Match the navbar text color */
+  flex-direction: column;
+  padding: 20px;
+  float: left; /* Keep the sidebar fixed */
+  top: 60px; /* Push the sidebar below the navbar */
+  left: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  transition: transform 0.3s ease-in-out; /* Smooth transition for dynamic behavior */
+  overflow-y:hidden; /* Make the sidebar scrollable if content overflows */
+}
+
+.sidebar.collapsed {
+  transform: translateX(-100%); /* Hide the sidebar when collapsed */
+}
+
+.sidebar-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333; /* Match the navbar text color */
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-menu li {
+  margin-bottom: 15px;
+}
+
+.sidebar-menu a {
+  color: #333; /* Match the navbar text color */
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-menu a:hover {
+  background-color: rgba(0, 0, 0, 0.05); /* Add hover effect */
+  color: #007bff; /* Match the navbar hover color */
+}
+
+/* Hamburger menu for smaller screens */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 20px; /* Adjust to align with the navbar */
+  left: 20px;
+  z-index: 1100;
+  cursor: pointer;
+  font-size: 24px;
+  color: #333; /* Match the navbar text color */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%); /* Hide sidebar by default */
+  }
+
+  .sidebar.open {
+    transform: translateX(0); /* Show sidebar when open */
+  }
+
+  .hamburger {
+    display: block; /* Show hamburger menu */
+  }
+}
