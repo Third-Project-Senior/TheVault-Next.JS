@@ -1,21 +1,20 @@
+'use client';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-import '../css/Profile.css';
-
+import { useRouter } from 'next/navigation';
 const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
   const token = localStorage.getItem('token');
+  const router = useRouter();
 
   useEffect(() => {
-    // if (!token) {
-    //   navigate('/login');
-    //   return;
-    // }
+    if (!token) {
+      router.push('/login');
+      return;
+    }
 
     const fetchUserData = async () => {
       try {
@@ -36,7 +35,7 @@ const Profile = () => {
         setError('Failed to load profile data. Please try again later.');
         if (error.response?.status === 401) {
           localStorage.removeItem('token');
-          navigate('/login');
+          router.push('/login');
         }
       } finally {
         setLoading(false);
@@ -44,12 +43,12 @@ const Profile = () => {
     };
 
     fetchUserData();
-  }, [navigate, token]);
+  }, [  token]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    navigate('/login');
+    router.push('/login');
   };
 
   if (loading) {
@@ -83,7 +82,7 @@ const Profile = () => {
   return (
     <div className="profile-container">
       <div className="profile-header">
-        <h1>Welcome, {userData.username}</h1>
+        <h1>Welcome, {userData.name}</h1>
         <p className="profile-subtitle">Manage your account details</p>
       </div>
 
@@ -93,7 +92,7 @@ const Profile = () => {
           <div className="profile-details">
             <div className="detail-item">
               <span className="detail-label">Name:</span>
-              <span className="detail-value">{userData.username}</span>
+              <span className="detail-value">{userData.name}</span>
             </div>
             <div className="detail-item">
               <span className="detail-label">Email:</span>
@@ -117,13 +116,13 @@ const Profile = () => {
           <div className="action-buttons">
             <button 
               className="profile-button primary"
-              onClick={() => navigate('/orders')}
+              onClick={() => router.push('/orders')}
             >
               View Your Orders
             </button>
             <button 
               className="profile-button secondary"
-              onClick={() => navigate('/settings')}
+              onClick={() => router.push('/settings')}
             >
               Account Settings
             </button>

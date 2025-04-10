@@ -1,9 +1,8 @@
+'use client'
 import axios from 'axios'
 import React from 'react'
 import { useEffect, useState } from 'react'
-import './ProductList.css'
-import SideBar from './SideBar'
-import AddProduct from './AddProduct'
+import AddProduct from '../../../components/AddProduct.jsx'
 import { jwtDecode } from 'jwt-decode'
 
 function ProductList() {
@@ -32,6 +31,14 @@ function ProductList() {
     } catch (error) {
       console.log(error)
     }
+    // fetch('http://localhost:3000/api/product' {
+    //   headers: {
+    //     'Authorization': `Bearer ${token}`
+    //   }
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => setProductList(data))
+    //   .catch((error) => console.error('Error fetching products:', error))
   }
   useEffect(() => {
     fetchProducts()
@@ -39,10 +46,7 @@ function ProductList() {
 
   return (
     <>
-    <div className='sidebar'>
-
-        <SideBar/>
-    </div>
+   
 
     <div className="productlist-container">
       <h1 className="productlist-title">Product List</h1>
