@@ -1,8 +1,9 @@
+
+'use client';
 import React from 'react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import OneProduct from './OneProduct.jsx';
-import './AllProducts.css';
 
 const AllProducts = () => {
   const [data, setData] = useState([]);

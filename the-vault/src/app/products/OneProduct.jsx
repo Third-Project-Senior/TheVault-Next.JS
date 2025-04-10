@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import './OneProduct.css';
 import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';
 
