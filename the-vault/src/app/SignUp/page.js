@@ -1,10 +1,12 @@
+'use client'
 import React from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
-import './SignUp.css'
+import {useRouter} from 'next/navigation'
 
 function SignUp() {
-    const navigate = useNavigate()
+    const router = useRouter()
+    const [loading, setLoading] = React.useState(false)
+    const [error, setError] = React.useState(null)
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
     const [name, setName] = React.useState('')
@@ -42,7 +44,7 @@ function SignUp() {
                             })
                             console.log(response.data)
                             alert(response.data)
-                            navigate('/Login')
+                            router.push('/Login')
                         } catch (error) {
                             alert(error.response.data)
                             console.log(error)

@@ -1,11 +1,11 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';
+import { useRouter } from 'next/navigation'
 
 const OneProduct = ({ e }) => {
-  const navigate = useNavigate();
+  const router = useRouter()
   const token = localStorage.getItem('token');
   console.log("OneProduct received data:", e);
 
@@ -25,7 +25,7 @@ const OneProduct = ({ e }) => {
       </div>
       <div className="product-info">
         <h5 
-          onClick={() => navigate(`/product/${e.id}`)} 
+          onClick={() => router.push(`/product/${e.id}`)} 
           className="product-title1"
         >
           {e.name}
@@ -47,7 +47,7 @@ const OneProduct = ({ e }) => {
 
             })
             console.log("Product added to cart successfully")
-            navigate('/cart');
+            router.push('/cart')
           } catch (error) {
             console.log("Error adding to cart:", error);
 

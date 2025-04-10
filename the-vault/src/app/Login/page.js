@@ -1,13 +1,14 @@
-import React from 'react'
+'use client'
+import React, { useState } from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import {useRouter} from 'next/navigation'
 import { jwtDecode } from 'jwt-decode'
-import './Login.css'
 
 function Login() {
-    const [email, setEmail] = React.useState('')
-    const [password, setPassword] = React.useState('')
-    const navigate = useNavigate()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    
+    const router = useRouter()
   return (
     <div className="login-container">
       <input 
@@ -37,10 +38,10 @@ function Login() {
 
               localStorage.setItem('token', response.data.token)
               if( jwtDecode(response.data.token).role=== 'admin'){
-              navigate('/dashboard/Overview')
+              router.push('/dashboard/Overview')
               }
               else if (jwtDecode(response.data.token).role === 'user') {
-                  navigate('/profile')
+                  router.push('/profile')
               }
               else {
                   alert('Invalid role')

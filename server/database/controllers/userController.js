@@ -95,7 +95,7 @@ module.exports = {
                 return res.status(401).send({ message: 'Invalid credentials' });
          }
     
-            const token = jwt.sign({ id: user.id,role:user.role,status:user.status }, SECRET_KEY, { expiresIn: '24h' });
+            const token = jwt.sign({ id: user.id,role:user.role,status:user.status,name:user.name }, SECRET_KEY, { expiresIn: '24h' });
             
             res.status(200).send({ message: 'Login successful', token });
 

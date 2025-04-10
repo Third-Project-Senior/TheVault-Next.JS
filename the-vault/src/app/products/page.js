@@ -20,7 +20,7 @@ const AllProducts = () => {
   const getData = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('http://localhost:3000/api/product/');
+      const res = await axios.get('http://localhost:3000/api/product');
       setData(res.data);
       setError(null);
     } catch (error) {
