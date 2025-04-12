@@ -31,6 +31,9 @@ Cart.belongsTo(User, { foreignKey: 'userId' });
 Product.hasMany(Cart, { foreignKey: 'productId' });
 Cart.belongsTo(Product, { foreignKey: 'productId' });
 
+Category.hasMany(Product, { foreignKey: 'categoryId' });
+Product.belongsTo(Category, { foreignKey: 'categoryId' });
+
 // connection.sync({force:true})
 // .then(() => {
 //     console.log('All models were synchronized successfully.');

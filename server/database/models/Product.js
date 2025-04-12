@@ -1,11 +1,5 @@
-// models/product.js
 module.exports = (connection, DataTypes) => {
   const Product = connection.define('Product', {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -25,14 +19,6 @@ module.exports = (connection, DataTypes) => {
 
     image: {
       type: DataTypes.STRING,
-      allowNull: true,
-    },
-    category: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    rating: {
-      type: DataTypes.FLOAT,
       allowNull: true,
     },
   });
