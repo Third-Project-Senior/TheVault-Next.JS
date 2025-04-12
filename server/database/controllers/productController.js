@@ -1,4 +1,4 @@
-const { Product } = require("../index.js"); // Adjust path if necessary
+const {Product}  = require("../index.js"); // Adjust path if necessary
 
 module.exports = {
   // Get all products
@@ -7,8 +7,10 @@ module.exports = {
       const products = await Product.findAll();
       res.status(200).json(products);
     } catch (error) {
+      console.log("Error fetching products:", error);
+      
       console.error("Error fetching products:", error);
-      res.status(500).json({ message: "Internal server error" });
+      res.status(500).json(error);
     }
   },
 
@@ -21,6 +23,8 @@ module.exports = {
 
       res.status(200).json(product);
     } catch (error) {
+      console.log("Error fetching product:", error);
+      
       console.error("Error fetching product:", error);
       res.status(500).json({ message: "Internal server error" });
     }
@@ -56,8 +60,6 @@ module.exports = {
         price: price || product.price,
         quantity: quantity || product.quantity,
         image: image || product.image,
-        category: category || product.category,
-        rating: rating || product.rating,
       });
 
       res.status(200).json({ message: "Product updated successfully", product });
