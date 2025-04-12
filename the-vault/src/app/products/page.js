@@ -24,6 +24,8 @@ const AllProducts = () => {
       setData(res.data);
       setError(null);
     } catch (error) {
+      console.log(error);
+      
       setError("Failed to load products: " + error.message);
     } finally {
       setLoading(false);

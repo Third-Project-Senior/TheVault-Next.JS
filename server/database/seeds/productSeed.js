@@ -1,4 +1,5 @@
 const {connection, Product, Category} = require('../index.js');
+const { Sequelize, DataTypes } = require('sequelize');
 
 const seedProducts = async () => {  
     try {
@@ -12,6 +13,7 @@ const seedProducts = async () => {
 
         const products = [
             {
+                
                 name: 'Vintage Radio', 
                 description: 'Classic 1950s radio in working condition',
                 price: 299.99, 
@@ -20,6 +22,7 @@ const seedProducts = async () => {
                 categoryId: Electronics.id
             },
             {
+                
                 name: 'Antique Gramophone',
                 description: 'Early 20th-century gramophone with brass horn', 
                 price: 499.99, 
@@ -28,6 +31,7 @@ const seedProducts = async () => {
                 categoryId: Electronics.id
             },
             {
+                
                 name: 'Victorian Dress',
                 description: 'Elegant Victorian-era dress with lace details',
                 price: 199.99,
@@ -36,6 +40,7 @@ const seedProducts = async () => {
                 categoryId: Clothes.id
             },
             {
+                
                 name: 'Military Jacket',
                 description: 'World War II-era military jacket',
                 price: 149.99,
@@ -44,6 +49,7 @@ const seedProducts = async () => {
                 categoryId: Clothes.id
             },
             {
+                
                 name: 'First Edition Novel',
                 description: 'Rare first edition of a classic novel',
                 price: 999.99,
@@ -52,6 +58,7 @@ const seedProducts = async () => {
                 categoryId: Books.id
             },
             {
+                
                 name: 'Antique Map',
                 description: '17th-century hand-drawn map',
                 price: 799.99,
@@ -68,6 +75,7 @@ const seedProducts = async () => {
                 categoryId: Mechanicals.id
             },
             {
+                
                 name: 'Antique Compass',
                 description: 'Brass compass from the 1800s',
                 price: 199.99,
@@ -76,6 +84,7 @@ const seedProducts = async () => {
                 categoryId: Mechanicals.id
             },
             {
+                
                 name: 'Medieval Sword',
                 description: 'Authentic medieval sword with scabbard',
                 price: 1299.99,
@@ -84,6 +93,7 @@ const seedProducts = async () => {
                 categoryId: Military.id
             },
             {
+                
                 name: 'Antique Helmet',
                 description: '16th-century steel helmet used in battle',
                 price: 899.99,

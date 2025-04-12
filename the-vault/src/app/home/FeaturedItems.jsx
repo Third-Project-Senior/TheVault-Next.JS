@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect } from 'react';
 
 const FeaturedItems = () => {
@@ -9,6 +10,8 @@ const FeaturedItems = () => {
     const fetchProducts = async () => {
       try {
         const response = await fetch('http://localhost:3000/api/product');
+        console.log(response.data);
+        
         if (!response.ok) throw new Error('Failed to load products');
         const data = await response.json();
         setProducts(data); // Show all products

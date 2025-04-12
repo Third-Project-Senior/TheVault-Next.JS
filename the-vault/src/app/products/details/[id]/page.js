@@ -2,13 +2,20 @@
 import React from 'react'
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-// import { useParams, useNavigate } from 'react-router-dom';
 import {jwtDecode} from 'jwt-decode';
 import {useParams} from 'next/navigation'
+import { useRouter } from 'next/navigation';
+import {use}from 'react'
 
-const ProductDetails = () => {
-    const { id } = useParams()
-    // const navigate = useNavigate();
+
+const ProductDetails = ({params}) => {
+    const router = useRouter();
+    const { id } = use(params);
+    console.log("Product ID from params:", id);
+
+    if (!id) {
+      return <div>Product not found</div>;
+    }
     const token = localStorage.getItem('token');
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
