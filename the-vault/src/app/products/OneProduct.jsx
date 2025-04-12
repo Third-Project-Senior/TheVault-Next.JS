@@ -25,7 +25,7 @@ const OneProduct = ({ e }) => {
       </div>
       <div className="product-info">
         <h5 
-          onClick={() => router.push(`/product/${e.id}`)} 
+          onClick={() => router.push(`/products/details/${e.id}`)} 
           className="product-title1"
         >
           {e.name}
