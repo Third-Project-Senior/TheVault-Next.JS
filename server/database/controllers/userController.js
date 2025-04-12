@@ -133,5 +133,33 @@ module.exports = {
             res.status(500).json({ message: 'Internal server error' });
         }
     },
+    
+    resetpass: async (req, res) => {
+        const { email } = req.params;
+        // const id = req.user.id;
+        const { password} = req.body;
+        try {
+            const user = await User.findOne({ where: { email:email } });
+            
+            if (!user) return res.status(404).json({ message: 'User not found' });
+
+            if (password) {
+                const hashedPassword = await bcrypt.hash(password, 10);
+                user.password = hashedPassword|| user.password;
+                await user.update({
+                    password: hashedPassword || user.password,
+                });
+            }
+            
+
+            res.status(200).json({ message: 'User updated successfully', user });
+            console.log('User updated:', user.status);
+            
+            
+        } catch (error) {
+            console.error('Error updating user:', error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    },
 
 }

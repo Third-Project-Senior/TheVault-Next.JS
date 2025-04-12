@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import {useRouter} from 'next/navigation'
 import { jwtDecode } from 'jwt-decode'
+import { ToastContainer, toast } from 'react-toastify'
 
 function Login() {
     const [email, setEmail] = useState('')
@@ -38,17 +39,21 @@ function Login() {
 
               localStorage.setItem('token', response.data.token)
               if( jwtDecode(response.data.token).role=== 'admin'){
+                toast.success('Login successful!')
               router.push('/dashboard/Overview')
               }
               else if (jwtDecode(response.data.token).role === 'user') {
+                toast.success('Login successful!')
+                setTimeout(() => {
+                  
                   router.push('/profile')
+                }, 500);
               }
               else {
                   alert('Invalid role')
                   return
               }
-              // console.log(response.data.token)
-              // console.log(jwtDecode(response.data.token))
+              
           } catch (error) {
               console.log(error)
           }
@@ -56,6 +61,11 @@ function Login() {
       >
         Login
       </button>
+      <ToastContainer />
+      
+      <p className="login-footer">
+        Forgot your password? <a href="resetpassword" className="login-link">Reset it</a> here
+      </p>
 
       <p className="login-footer">
         You don't have an account? <a href="SignUp" className="login-link">Sign up</a> here

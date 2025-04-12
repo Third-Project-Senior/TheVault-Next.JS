@@ -48,13 +48,13 @@ const navigate = useNavigate()
         timerProgressBar: true,
       });
     }, [])
-    setTimeout(()=>    navigate("/")
+    setTimeout(()=>navigate("/")
  , 2000 )
 
   }
   return (
 <div>{PaymentSuccess()} </div>
-  );
-};
+  )
+}
 
 export default Success;

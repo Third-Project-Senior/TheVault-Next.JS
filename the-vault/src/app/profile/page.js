@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { useRouter } from 'next/navigation';
+import { ToastContainer, toast } from 'react-toastify'
 const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -27,10 +28,12 @@ const Profile = () => {
             Authorization: `Bearer ${token}`,
           },
         });
+        toast.success('Profile data loaded successfully!');
         
         setUserData(response.data);
         setError(null);
       } catch (error) {
+        toast.error('Failed to load profile data!');
         console.error('Error fetching user data:', error);
         setError('Failed to load profile data. Please try again later.');
         if (error.response?.status === 401) {
@@ -67,6 +70,8 @@ const Profile = () => {
         <button className="retry-button" onClick={() => window.location.reload()}>
           Retry
         </button>
+        <ToastContainer />
+
       </div>
     );
   }
@@ -81,6 +86,8 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
+        <ToastContainer />
+
       <div className="profile-header">
         <h1>Welcome, {userData.name}</h1>
         <p className="profile-subtitle">Manage your account details</p>
