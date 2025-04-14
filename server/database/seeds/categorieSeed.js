@@ -11,7 +11,6 @@ const seedCategories = async () => {
       { name: 'Books' },
       { name: 'Mechanicals' },
       { name: 'Military' },
-
     ];
 
     await Category.bulkCreate(categories);

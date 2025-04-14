@@ -81,6 +81,7 @@ const ProductDetails = ({params}) => {
             </div>
         );
     }
+    
 
     return (
         <div className="product-detail-container">
@@ -146,6 +147,21 @@ const ProductDetails = ({params}) => {
                     </div>
                 </div>
             </div>
+            {/* <section className="comment-section" >
+                <div className="comment-input" >
+                    <input className="comment-input" type="text" placeholder="Comment" onChange={(e)=>setComment(etargetvalue)} />
+                    <button className="comment-btn"
+                    onClick={()=>{
+
+                    }}
+                    >Comment</button>
+                </div>
+                <div className="comment-list">
+                    {comments.map((comment)=>{})}
+                </div>
+                
+                
+            </section> */}
         </div>
     );
 };
