@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { PostgresDialect } = require('@sequelize/postgres');
 const postgres = require('pg');
+const comment = require('./models/comment');
 
 const connection = new Sequelize({
   dialect: 'postgres',
@@ -49,5 +50,5 @@ Comment.belongsTo(User, { foreignKey: 'userId' });
 // })
 // .catch(err => console.error('Unable to synchronize models:', err));
 
-module.exports = { connection, User, Cart, Product ,Category};
+module.exports = { connection, User, Cart, Product ,Category,Comment};
 

@@ -7,7 +7,12 @@ module.exports = {
             const newComment = await Comment.create({ content, userId, productId });
             res.status(201).json(newComment);
         } catch (error) {
-            res.status(500).json({ error: 'Failed to create comment' });
+            console.error('Comment creation error:', error);
+            res.status(500).json({ 
+                error: 'Failed to create comment', 
+                details: error.message,
+                name: error.name
+            });
         }
     },
 
