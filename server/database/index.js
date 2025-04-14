@@ -24,6 +24,7 @@ const User = require('./models/user')(connection, DataTypes);
 const Cart = require('./models/cart')(connection, DataTypes);
 const Product = require('./models/Product')(connection, DataTypes);
 const Category = require('./models/categorie')(connection, DataTypes);
+const Comment = require('./models/comment')(connection, DataTypes);
 
 User.hasMany(Cart, { foreignKey: 'userId' });
 Cart.belongsTo(User, { foreignKey: 'userId' });
@@ -33,6 +34,14 @@ Cart.belongsTo(Product, { foreignKey: 'productId' });
 
 Category.hasMany(Product, { foreignKey: 'categoryId' });
 Product.belongsTo(Category, { foreignKey: 'categoryId' });
+
+Product.hasMany(Comment, { foreignKey: 'productId' });
+Comment.belongsTo(Product, { foreignKey: 'productId' });
+
+User.hasMany(Comment, { foreignKey: 'userId' });
+Comment.belongsTo(User, { foreignKey: 'userId' });
+
+
 
 // connection.sync({force:true})
 // .then(() => {
