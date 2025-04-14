@@ -65,7 +65,7 @@ const FeaturedItems = () => {
                 <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
                 <p className="text-gray-700 mb-4">${product.price}</p>
                 <a
-                  href={`/product/${product.id}`}
+                  href={`/products/details/${product.id}`}
                   className="mt-auto bg-blue-500 text-white text-center py-2 px-4 rounded hover:bg-blue-600"
                 >
                   View Details

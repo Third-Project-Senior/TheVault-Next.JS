@@ -2,6 +2,7 @@
 import React from 'react'
 import axios from 'axios'
 import {useRouter} from 'next/navigation'
+import swal from 'sweetalert2'
 
 function SignUp() {
     const router = useRouter()
@@ -43,11 +44,26 @@ function SignUp() {
                                 name
                             })
                             console.log(response.data)
-                            alert(response.data)
-                            router.push('/Login')
+                            swal.fire({
+                                title: "Success!",
+                                text: "Account created successfully.",
+                                icon: "success",
+                                draggable: true,
+                                timer: 1500,
+                            });
+                            setTimeout(() => {
+                                router.push('/Login')
+                            }, 1500);
                         } catch (error) {
-                            alert(error.response.data)
-                            console.log(error)
+                            swal.fire({
+                                title: "Error!",
+                                text: error.response.data,
+                                icon: "error",
+                                draggable: true,
+                                timer: 1500,
+                            });
+                            console.error(error)
+                            setError('Failed to create account. Please try again later.')
                         }
                     }}
                 >
