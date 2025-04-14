@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import {useRouter} from 'next/navigation'
 import { jwtDecode } from 'jwt-decode'
-import { ToastContainer, toast } from 'react-toastify'
+import Swal from 'sweetalert2'
 
 function Login() {
     const [email, setEmail] = useState('')
@@ -33,21 +33,45 @@ function Login() {
                   password: password
               })
               if (jwtDecode(response.data.token).status === 'banned') {
-                  alert('Your account is banned')
+                Swal.fire({
+                  title: "Banned!",
+                  text: "Your account has been banned. Please contact support.",
+                  icon: "error",
+                  draggable: true
+                });
+                  
                   return
               }
 
               localStorage.setItem('token', response.data.token)
               if( jwtDecode(response.data.token).role=== 'admin'){
-                toast.success('Login successful!')
-              router.push('/dashboard/Overview')
-              }
-              else if (jwtDecode(response.data.token).role === 'user') {
-                toast.success('Login successful!')
+                Swal.fire({
+                  title: "Welcome Admin!",
+                  text: "You have successfully logged in.",
+                  icon: "success",
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  draggable: true
+                });
                 setTimeout(() => {
                   
-                  router.push('/profile')
-                }, 500);
+                  router.push('/dashboard/Overview')
+                }, 1500);
+              
+              }
+              else if (jwtDecode(response.data.token).role === 'user') {
+                Swal.fire({
+                  title: "Welcome!",
+                  text: "You have successfully logged in.",
+                  icon: "success",
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  draggable: true
+                });
+                setTimeout(() => {
+                  
+                  router.push('/home')
+                }, 1500);
               }
               else {
                   alert('Invalid role')
@@ -56,12 +80,23 @@ function Login() {
               
           } catch (error) {
               console.log(error)
+              Swal.fire({
+                title: "Error!",
+                text: "Invalid email or password.",
+                icon: "error",
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1000,
+              });
+              setTimeout(() => {
+                router.push('/Login')
+              }, 1000);
           }
         }}
       >
         Login
       </button>
-      <ToastContainer />
+      
       
       <p className="login-footer">
         Forgot your password? <a href="resetpassword" className="login-link">Reset it</a> here
