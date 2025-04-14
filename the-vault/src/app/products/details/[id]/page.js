@@ -6,6 +6,7 @@ import {jwtDecode} from 'jwt-decode';
 import {useParams} from 'next/navigation'
 import { useRouter } from 'next/navigation';
 import {use}from 'react'
+import Comments from '../../../../components/Comments.jsx';
 import Swal from "sweetalert2"
 
 
@@ -81,7 +82,6 @@ const ProductDetails = ({params}) => {
             </div>
         );
     }
-    
 
     return (
         <div className="product-detail-container">
@@ -147,21 +147,7 @@ const ProductDetails = ({params}) => {
                     </div>
                 </div>
             </div>
-            {/* <section className="comment-section" >
-                <div className="comment-input" >
-                    <input className="comment-input" type="text" placeholder="Comment" onChange={(e)=>setComment(etargetvalue)} />
-                    <button className="comment-btn"
-                    onClick={()=>{
-
-                    }}
-                    >Comment</button>
-                </div>
-                <div className="comment-list">
-                    {comments.map((comment)=>{})}
-                </div>
-                
-                
-            </section> */}
+            <Comments productId={product.id} />
         </div>
     );
 };
