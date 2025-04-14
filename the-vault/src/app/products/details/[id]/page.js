@@ -6,6 +6,7 @@ import {jwtDecode} from 'jwt-decode';
 import {useParams} from 'next/navigation'
 import { useRouter } from 'next/navigation';
 import {use}from 'react'
+import Comments from '../../../../components/Comments.jsx';
 
 
 const ProductDetails = ({params}) => {
@@ -145,6 +146,7 @@ const ProductDetails = ({params}) => {
                     </div>
                 </div>
             </div>
+            <Comments productId={product.id} />
         </div>
     );
 };
