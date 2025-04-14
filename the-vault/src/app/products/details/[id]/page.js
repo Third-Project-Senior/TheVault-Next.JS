@@ -6,6 +6,7 @@ import {jwtDecode} from 'jwt-decode';
 import {useParams} from 'next/navigation'
 import { useRouter } from 'next/navigation';
 import {use}from 'react'
+import Swal from "sweetalert2"
 
 
 const ProductDetails = ({params}) => {
