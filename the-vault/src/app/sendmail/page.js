@@ -3,6 +3,7 @@ import React, { useRef,useState,useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 function page() {
   const router = useRouter()
@@ -65,7 +66,13 @@ function page() {
         onClick={async () => {
             if (code != mailcode) {
                 console.log("input code",code,"mail code", mailcode);
-                alert('Invalid code try another code')
+                Swal.fire({
+                    title: "Error!",
+                    text: "Code is incorrect, try again!",
+                    icon: "error",
+                    draggable: true,
+                    timer: 1500,
+                });
                 
                 return
             }
@@ -74,14 +81,30 @@ function page() {
                     password: newPassword
                 })
                 console.log(response.data)
-                alert('Password reset successfully')
-                router.push('/Login')
+                Swal.fire({
+                    title: "Success!",
+                    text: "Password reset successfully.",
+                    icon: "success",
+                    draggable: true,
+                    timer: 1500,
+                });
+                setTimeout(() => {
+                    router.push('/login')
+                }, 1500);
+                
             } catch (error) {
                 console.error(error)
                 console.log("input code",code,"mail code", mailcode);
-                alert('Failed to reset password',code,mailcode)
-            }
+                Swal.fire({
+                    title: "Error!",
+                    text: "Failed to reset password.",
+                    icon: "error",
+                    draggable: true,
+                    timer: 1500,
+                });
         }}
+        }
+        
     >
         Reset Password
     </button>

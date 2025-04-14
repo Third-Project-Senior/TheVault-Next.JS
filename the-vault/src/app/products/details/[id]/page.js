@@ -59,7 +59,7 @@ const ProductDetails = ({params}) => {
                 <h3 className="text-danger">{error}</h3>
                 <button 
                     className="btn btn-primary mt-3"
-                    onClick={() => navigate('/')}
+                    onClick={() => router.push('/products')}
                 >
                     Back to Products
                 </button>
@@ -73,7 +73,7 @@ const ProductDetails = ({params}) => {
                 <h3>Product not found</h3>
                 <button 
                     className="btn btn-primary mt-3"
-                    onClick={() => navigate('/')}
+                    onClick={() => router.push('/products')}
                 >
                     Back to Products
                 </button>
@@ -119,17 +119,27 @@ const ProductDetails = ({params}) => {
             },{
               headers: {
                 'Authorization': `Bearer ${token}`
-
-                
               }
 
             });
-            navigate("/cart")
-            console.log("Product added to cart successfully");
+            Swal.fire({
+              title: "Success!",
+              text: "Product added to cart.",
+              icon: "success",
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 1500,
+            });
           } catch (error) {
             console.log("Error adding to cart:", error);
-
-            
+            Swal.fire({
+              title: "Error!",
+              text: "Failed to add product to cart.",
+              icon: "error",
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 1500,
+            });
           }
         }}className="add-to-cart-btn">Add to Cart</button>
                     </div>

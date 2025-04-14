@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { jwtDecode } from 'jwt-decode';
+import Swal from "sweetalert2";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -16,10 +17,10 @@ const Cart = () => {
     try {
       const response = await axios.get(`http://localhost:3000/api/cart/${id}`);
       setCartItems(response.data);
-      console.log(response.data);
-      
+      console.log(response.data, "cart items");
+         
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   };
 
@@ -145,7 +146,26 @@ const Cart = () => {
                 <div className="remove-item">
                   <button
                     className="remove-btn"
-                    onClick={() => handleRemoveItem(item.id)}
+                    onClick={() =>{
+                      Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't be able to revert this!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, delete it!"
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          Swal.fire({
+                            title: "Deleted!",
+                            text: "Your file has been deleted.",
+                            icon: "success"
+                          });
+                          handleRemoveItem(item.id)
+                        }
+                      });
+                    }}
                   >
                     Remove
                   </button>
@@ -155,7 +175,27 @@ const Cart = () => {
           </div>
 
           <div className="cart-summary">
-            <button className="checkout-btn" onClick={()=> {handleCheckout(cartItems[0].id)}}>
+            <button className="checkout-btn" onClick={()=> {
+              Swal.fire({
+                title: "Are you sure?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Checkout!"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  Swal.fire({
+                    title: "Proceed to Checkout!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                  });
+                  handleCheckout(cartItems[0].id)
+                }
+              });
+              
+
+            }}>
               Proceed to Checkout
             </button>
           </div>

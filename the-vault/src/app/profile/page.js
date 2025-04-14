@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { useRouter } from 'next/navigation';
-import { ToastContainer, toast } from 'react-toastify'
+import Swal from 'sweetalert2';
 const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -28,12 +28,27 @@ const Profile = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        toast.success('Profile data loaded successfully!');
+        Swal.fire({
+          title: "Welcome Back!",
+          text: "You have successfully logged in.",
+          icon: "success",
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+        });    
         
         setUserData(response.data);
         setError(null);
       } catch (error) {
-        toast.error('Failed to load profile data!');
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to load profile data.",
+          icon: "error",
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
         console.error('Error fetching user data:', error);
         setError('Failed to load profile data. Please try again later.');
         if (error.response?.status === 401) {
@@ -51,7 +66,17 @@ const Profile = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    router.push('/login');
+    Swal.fire({
+      title: "Logged Out!",
+      text: "You have successfully logged out.",
+      icon: "success",
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    setTimeout(() => {
+      router.push('/login');
+    }, 1500);
   };
 
   if (loading) {
@@ -70,7 +95,6 @@ const Profile = () => {
         <button className="retry-button" onClick={() => window.location.reload()}>
           Retry
         </button>
-        <ToastContainer />
 
       </div>
     );
@@ -86,7 +110,6 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
-        <ToastContainer />
 
       <div className="profile-header">
         <h1>Welcome, {userData.name}</h1>

@@ -1,4 +1,5 @@
 import React from 'react';
+import Swal from 'sweetalert2'
 
 import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';
@@ -46,12 +47,24 @@ const OneProduct = ({ e }) => {
               }
 
             })
-            console.log("Product added to cart successfully")
-            router.push('/cart')
+            Swal.fire({
+              title: "Success!",
+              text: "Product added to cart.",
+              icon: "success",
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 1500,
+            });
           } catch (error) {
             console.log("Error adding to cart:", error);
-
-            
+            Swal.fire({
+              title: "Error!",
+              text: "Failed to add product to cart.",
+              icon: "error",
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 1500,
+            });
           }
         }} className="add-to-cart-btn">Add to Cart</button>
       </div>

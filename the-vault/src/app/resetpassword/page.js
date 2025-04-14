@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import {useRouter} from 'next/navigation'
 import emailjs from '@emailjs/browser'
+import swal from 'sweetalert2'
 
 function page() {
     const router = useRouter()
@@ -36,8 +37,13 @@ function page() {
                 onClick={async () => {
                     if (code != mailcode) {
                         console.log(code, mailcode);
-                        alert('Invalid code try another code')
-                        
+                        swal.fire({
+                            title: "Error!",
+                            text: "Code is incorrect, try again!",
+                            icon: "error",
+                            draggable: true
+                            timer: 1500,
+                        });                        
                         return
                     }
                     try {
@@ -45,13 +51,27 @@ function page() {
                             password: newPassword
                         })
                         console.log(response.data)
-                        alert('Password reset successfully')
-                        router.push('/Login')
+                        swal.fire({
+                            title: "Success!",
+                            text: "Password reset successfully.",
+                            icon: "success",
+                            draggable: true
+                            timer: 1500,
+                        });
+                        setTimeout(() => {
+                            router.push('/login')
+                        }, 1500);
                     } catch (error) {
                         console.error(error)
-                        alert('Failed to reset password')
-                    }
+                        swal.fire({
+                            title: "Error!",
+                            text: "Failed to reset password.",
+                            icon: "error",
+                            draggable: true
+                            timer: 1500,
+                        });
                 }}
+            }
             >
                 Reset Password
             </button>
