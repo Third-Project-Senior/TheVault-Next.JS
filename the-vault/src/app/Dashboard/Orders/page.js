@@ -1,11 +1,14 @@
-import React from 'react'
+import React from 'react';
 
 function Orders() {
+ 
+
   return (
-    <div>
-      
-    </div>
-  )
+
+      <h1>Orders</h1>
+     
+  
+  );
 }
 
-export default Orders
+export default Orders;
