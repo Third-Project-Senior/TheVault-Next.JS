@@ -7,6 +7,7 @@ const cartRouter = require('./cartRouter')
 const payementRouter = require ('./paymentRouter')
 const CategRouter = require('./categorie.routes')
 const CommentRouter = require('./comment.route')
+const orderRouter = require('./orderRouter')
 
 router.use('/user', userRouter)
 router.use('/product', productRouter)
@@ -14,9 +15,6 @@ router.use('/cart', cartRouter)
 router.use('/payment', payementRouter)
 router.use('/category', CategRouter)
 router.use('/comment', CommentRouter)
-
-
-
-
+router.use('/order', orderRouter)
 
 module.exports = router
