@@ -7,6 +7,7 @@ import {useParams} from 'next/navigation'
 import { useRouter } from 'next/navigation';
 import {use}from 'react'
 import Comments from '../../../../components/Comments.jsx';
+import Swal from "sweetalert2"
 
 
 const ProductDetails = ({params}) => {

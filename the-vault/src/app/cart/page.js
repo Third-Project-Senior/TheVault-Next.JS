@@ -73,14 +73,22 @@ const Cart = () => {
       
       await axios.delete(`http://localhost:3000/api/cart/${id}`);
 
-  
+                  Swal.fire({
+                    title: "Proceed to Checkout!",
+                    icon: "success"
+                    
+                  });
       setTimeout(() => {
         window.location.href = paymentUrl;
-      }, 100);
+      }, 500);
   
     } catch (error) {
       console.error("Payment Error:", error);
-      alert("Something went wrong during payment. Please try again.");
+                 Swal.fire({
+                    title: "Error!",
+                    text: "Something went wrong during payment. Please try again.",
+                    icon: "error",
+                  });
     }
   };
   
@@ -185,11 +193,7 @@ const Cart = () => {
                 confirmButtonText: "Checkout!"
               }).then((result) => {
                 if (result.isConfirmed) {
-                  Swal.fire({
-                    title: "Proceed to Checkout!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                  });
+                 
                   handleCheckout(cartItems[0].id)
                 }
               });

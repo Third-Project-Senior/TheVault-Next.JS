@@ -17,12 +17,18 @@ module.exports = {
     },
 
     getCommentsByProductId: async (req, res) => {
-        const { productId } = req.params;
+        const  {productId}  = req.params;
         try {
-            const comments = await Comment.findAll({ where: { productId } });
+            const comments = await Comment.findAll({
+                where:{
+                    productId
+                }
+            });
+
             res.status(200).json(comments);
         } catch (error) {
-            res.status(500).json({ error: 'Failed to fetch comments' });
+            
+            res.status(500).json(error);
         }
     },
 
