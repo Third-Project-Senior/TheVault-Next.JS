@@ -1,12 +1,14 @@
-
+'use client'
 //kenet succes.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
+
 const Success = () => {
+  const router=useRouter()
   const [paymentStatus, setPaymentStatus] = useState(null);
-const navigate = useNavigate()
   useEffect(() => {
     const paymentId = new URLSearchParams(window.location.search).get('payment_id');
     console.log(paymentId, "sousou");
@@ -48,8 +50,8 @@ const navigate = useNavigate()
         timerProgressBar: true,
       });
     }, [])
-    setTimeout(()=>navigate("/")
- , 2000 )
+    setTimeout(()=>router.push("/")
+ , 3000 )
 
   }
   return (

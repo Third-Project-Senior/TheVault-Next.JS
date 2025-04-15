@@ -33,6 +33,8 @@ const AllProducts = () => {
       setLoading(true);
       const res = await axios.get('http://localhost:3000/api/product');
       setData(res.data);
+      console.log("pro",res.data);
+      
       setError(null);
     } catch (error) {
       console.log(error);
@@ -44,7 +46,7 @@ const AllProducts = () => {
   };
 
   const filteredProducts = data.filter(product => {
-    const matchesCategory = selectedCategory === 'all' || product.category?.toLowerCase() === selectedCategory.toLowerCase();
+    const matchesCategory = selectedCategory === 'all' || product.categoryId === selectedCategory.id;
     const matchesSearch = product.name?.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
@@ -71,7 +73,7 @@ const AllProducts = () => {
           <button
             key={category.id}
             className={`category-btn ${selectedCategory === category ? 'active' : ''}`}
-            onClick={() => setSelectedCategory(category.name || category)}
+            onClick={() => setSelectedCategory(category)}
             style={{
               backgroundColor: selectedCategory === category ? '#007bff' : '#f8f9fa',
               color: selectedCategory === category ? '#fff' : '#000',
