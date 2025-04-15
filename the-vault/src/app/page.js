@@ -1,60 +1,43 @@
-import Image from "next/image";
-
-export default function Home() {
+'use client';
+import React from 'react';
+import FeaturedItems from './home/FeaturedItems'; // Adjust the import path as necessary
+const Home = () => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <nav className="row-start-1 flex items-center justify-between w-full max-w-[800px]">
-      </nav>
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-       hello
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    <div className="home-page">
+      {/* Hero Section */}
+      <div className="hero-section">
+        <div className="container">
+          <div className="row align-items-center min-vh-75">
+            <div className="col-md-6">
+              <h1 className="hero-title">Discover Unique Antique Treasures</h1>
+              <p className="hero-text">
+                Explore our curated collection of rare and beautiful antiques from around the world.
+                Each piece tells a unique story waiting to be discovered.
+              </p>
+              <a href="/shop" className="btn btn-primary btn-lg">
+                Explore Collection
+              </a>
+            </div>
+            <div className="col-md-6">
+              <img
+                src="https://images-cdn.ubuy.co.in/635e0b1d3f834e34592dc8ad-metal-antique-vintage-car-model.jpg"
+                alt="Antique Collection"
+                className="hero-image"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Featured Items */}
+      <section className="featured-items py-10 bg-gray-100">
+        <div className="container mx-auto">
+          <h2 className="text-center text-2xl font-bold mb-6">Featured Products</h2>
+          <FeaturedItems />
+        </div>
+      </section>
     </div>
   );
-}
+};
+
+export default Home;
