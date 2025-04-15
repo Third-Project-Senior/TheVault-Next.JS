@@ -16,6 +16,8 @@ const AllProducts = () => {
     getData();
   }, []);
 
+  
+
   const getData = async () => {
     try {
       setLoading(true);
