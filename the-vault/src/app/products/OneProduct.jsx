@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 const OneProduct = ({ e }) => {
   const router = useRouter()
   const token = localStorage.getItem('token');
-  console.log("OneProduct received data:", e);
+  // console.log("OneProduct received data:", e);
 
   if (!e) {
     console.error("OneProduct received no data");
@@ -35,6 +35,9 @@ const OneProduct = ({ e }) => {
         <p className="product-rating"><strong>Rating:</strong> {e.rating} ⭐</p>
         <button onClick={async()=>{
           try {
+            // const response = await axios.get(`http://localhost:3000/api/cart/${jwtDecode(token).id}`);
+            
+            
             await axios.post('http://localhost:3000/api/cart', {
               productId: e.id,
               quantity: 1,

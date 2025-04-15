@@ -1,4 +1,3 @@
-
 'use client';
 import React from 'react';
 import axios from 'axios';
@@ -15,7 +14,19 @@ const AllProducts = () => {
 
   useEffect(() => {
     getData();
+    getCategories();
   }, []);
+
+  const getCategories = async () => {
+    try {
+      const res = await axios.get('http://localhost:3000/api/category/getAll');
+      setCategories(['all', ...res.data]);
+      console.log(res.data,"categories");
+      
+    } catch (error) {
+      console.error("Failed to load categories: ", error);
+    }
+  }
 
   const getData = async () => {
     try {
@@ -58,11 +69,20 @@ const AllProducts = () => {
       <div className="category-navigation">
         {categories.map((category) => (
           <button
-            key={category}
+            key={category.id}
             className={`category-btn ${selectedCategory === category ? 'active' : ''}`}
-            onClick={() => setSelectedCategory(category)}
+            onClick={() => setSelectedCategory(category.name || category)}
+            style={{
+              backgroundColor: selectedCategory === category ? '#007bff' : '#f8f9fa',
+              color: selectedCategory === category ? '#fff' : '#000',
+              padding: '10px 20px',
+              margin: '5px',
+              borderRadius: '5px',
+              border: 'none',
+              cursor: 'pointer',
+            }}
           >
-            {category.charAt(0).toUpperCase() + category.slice(1)}
+            {category.name || category}
           </button>
         ))}
       </div>
