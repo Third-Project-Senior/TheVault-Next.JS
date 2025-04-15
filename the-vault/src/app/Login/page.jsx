@@ -4,12 +4,16 @@ import axios from 'axios'
 import {useRouter} from 'next/navigation'
 import { jwtDecode } from 'jwt-decode'
 import Swal from 'sweetalert2'
+import { GoogleLogin } from '@react-oauth/google';
 
 function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     
     const router = useRouter()
+    
+      
+    
   return (
     <div className="login-container">
       <input 
@@ -105,6 +109,14 @@ function Login() {
       <p className="login-footer">
         You don't have an account? <a href="SignUp" className="login-link">Sign up</a> here
       </p>
+      <div className="google-login" >
+        <GoogleLogin
+        onSuccess={(response)=>console.log(jwtDecode(response.credential))}
+        onError={console.log("error")
+        }
+        
+        />
+      </div>
     </div>
   )
 }
