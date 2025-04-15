@@ -40,5 +40,14 @@ module.exports = (connection, DataTypes) => {
         defaultValue: [],
     },    
     })
+
+    // Define the association with Order
+    User.associate = (models) => {
+        User.hasMany(models.Order, {
+            foreignKey: 'userId',
+            as: 'orders'
+        });
+    };
+
     return User;
 }
