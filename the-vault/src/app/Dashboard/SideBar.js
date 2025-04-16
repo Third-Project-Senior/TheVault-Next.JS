@@ -33,6 +33,11 @@ export default function SideBar() {
       icon: Settings,
       href: '/Dashboard/settings',
     },
+    {
+      title: 'Inentory',
+      icon: Package,
+      href: '/Dashboard/inventory',
+    },
   ];
 
   return (

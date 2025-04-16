@@ -1,7 +1,8 @@
+'use client'
 import React, {  useEffect, useState } from 'react'
 import axios from 'axios'
-import SideBar from './SideBar'
-import './UserList.css'
+import SideBar from "../../../components/SideBar.jsx"  
+// import './UserList.css'
 import { jwtDecode } from 'jwt-decode'
 
 function UserList() {
