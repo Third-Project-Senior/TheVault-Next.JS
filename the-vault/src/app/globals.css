@@ -1,5 +1,9 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/* Custom styles */
 :root {
   --background: #ffffff;
   --foreground: #318ce1;
@@ -22,5 +26,45 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Home Page Styles */
+.home-page {
+  @apply bg-gray-100 text-gray-900;
+}
+
+/* Login Page Styles */
+.login-page {
+  @apply bg-blue-50 text-blue-900;
+}
+
+/* Dashboard Page Styles */
+.dashboard-page {
+  @apply bg-white text-gray-800;
+}
+
+/* Cart Page Styles */
+.cart-page {
+  @apply bg-yellow-50 text-yellow-900;
+}
+
+/* Profile Page Styles */
+.profile-page {
+  @apply bg-green-50 text-green-900;
+}
+
+/* Shop Page Styles */
+.shop-page {
+  @apply bg-purple-50 text-purple-900;
+}
+
+/* Reset Password Page Styles */
+.reset-password-page {
+  @apply bg-red-50 text-red-900;
+}
+
+/* Sign Up Page Styles */
+.sign-up-page {
+  @apply bg-pink-50 text-pink-900;
 }
