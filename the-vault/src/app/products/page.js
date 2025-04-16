@@ -21,8 +21,6 @@ const AllProducts = () => {
     try {
       const res = await axios.get('http://localhost:3000/api/category/getAll');
       setCategories(['all', ...res.data]);
-      console.log(res.data,"categories");
-      
     } catch (error) {
       console.error("Failed to load categories: ", error);
     }
@@ -33,12 +31,8 @@ const AllProducts = () => {
       setLoading(true);
       const res = await axios.get('http://localhost:3000/api/product');
       setData(res.data);
-      console.log("pro",res.data);
-      
       setError(null);
     } catch (error) {
-      console.log(error);
-      
       setError("Failed to load products: " + error.message);
     } finally {
       setLoading(false);
@@ -51,50 +45,71 @@ const AllProducts = () => {
     return matchesCategory && matchesSearch;
   });
 
-  if (loading) return <div className="loading">Loading products...</div>;
-  if (error) return <div className="error">{error}</div>;
-  if (!data.length) return <div className="no-products">No products available</div>;
+  if (loading) return (
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+    </div>
+  );
+  
+  if (error) return (
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        {error}
+      </div>
+    </div>
+  );
+  
+  if (!data.length) return (
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded">
+        No products available
+      </div>
+    </div>
+  );
 
   return (
-    <div className="container">
-      <h1 className="title-h1">All Products</h1>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">All Products</h1>
 
-      {/* Input Search */}
-      <input
-        type="text"
-        placeholder="Search products..."
-        className="search-input"
-        onKeyUp={(e) => setSearchTerm(e.target.value)}
-        style={{ marginBottom: '20px', padding: '8px', width: '100%', maxWidth: '400px' }}
-      />
+      {/* Search Input */}
+      <div className="flex justify-center mb-8">
+        <input
+          type="text"
+          placeholder="Search products..."
+          className="w-full max-w-md px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
 
-      <div className="category-navigation">
+      {/* Category Navigation */}
+      <div className="flex flex-wrap justify-center gap-2 mb-8">
         {categories.map((category) => (
           <button
-            key={category.id}
-            className={`category-btn ${selectedCategory === category ? 'active' : ''}`}
+            key={category.id || category}
+            className={`px-4 py-2 rounded-full font-medium transition-colors duration-200 ${
+              selectedCategory === category 
+                ? 'bg-blue-600 text-white shadow-md' 
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            }`}
             onClick={() => setSelectedCategory(category)}
-            style={{
-              backgroundColor: selectedCategory === category ? '#007bff' : '#f8f9fa',
-              color: selectedCategory === category ? '#fff' : '#000',
-              padding: '10px 20px',
-              margin: '5px',
-              borderRadius: '5px',
-              border: 'none',
-              cursor: 'pointer',
-            }}
           >
-            {category.name || category}
+            {category.name || category.charAt(0).toUpperCase() + category.slice(1)}
           </button>
         ))}
       </div>
 
-      <br />
-      <div className="products-grid">
-        {filteredProducts.map((e, i) => (
-          <OneProduct key={i} e={e} />
+      {/* Products Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {filteredProducts.map((product, index) => (
+          <OneProduct key={index} e={product} />
         ))}
       </div>
+
+      {filteredProducts.length === 0 && (
+        <div className="text-center py-12">
+          <p className="text-gray-500 text-lg">No products match your search criteria</p>
+        </div>
+      )}
     </div>
   );
 };

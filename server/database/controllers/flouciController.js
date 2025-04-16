@@ -8,11 +8,11 @@ module.exports = {
     const url =  "https://developers.flouci.com/api/generate_payment"
     const payload = {
       app_token: "894a54f7-3f74-42ac-a4a1-91930ac0cd54", 
-      app_secret: process.env.FLOUCI_SECRET,
+      app_secret: "c9196db2-c1a1-41a7-ba17-c711f5c9c97e",
       amount: req.body.amount,
       accept_card: true,
       session_timeout_secs: 1200,
-      success_link: "http://localhost:3001/Success", 
+      success_link: "http://localhost:3001/Payment", 
       fail_link: "http://localhost:3001/Failed",    
       developer_tracking_id: "b6e1e180-32d9-47ca-97e0-b591631c008f", 
     };
@@ -54,7 +54,7 @@ console.log(result , "result");
       const headers = {
         'Content-Type': 'application/json',
         'apppublic': '894a54f7-3f74-42ac-a4a1-91930ac0cd54',  
-        'appsecret': x  
+        'appsecret': "c9196db2-c1a1-41a7-ba17-c711f5c9c97e"
       };
     
       try {

@@ -50,7 +50,6 @@ const FeaturedItems = () => {
   return (
     <section className="featured-items py-10 bg-gray-100">
       <div className="container mx-auto">
-        <h2 className="text-center text-2xl font-bold mb-6">Featured Products</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {products.slice(0, 4).map((product) => (
             <div key={product.id} className="bg-white shadow-md rounded-lg overflow-hidden">
@@ -58,7 +57,7 @@ const FeaturedItems = () => {
                 <img
                   src={product.image || 'https://via.placeholder.com/300x200?text=No+Image'}
                   alt={product.name}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-70 object-cover"
                 />
               </div>
               <div className="p-4 flex flex-col">
