@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -20,22 +20,22 @@ function Overview() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         
-        if (!token) {
-            router.push('/');
-            return;
-        }
+        // if (!token) {
+        //     router.push('/');
+        //     return;
+        // }
 
-        try {
-            const decoded = jwtDecode(token);
-            if (decoded.role !== 'admin') {
-                router.push('/');
-                return;
-            }
-        } catch (error) {
-            console.error('Token validation error:', error);
-            router.push('/');
-            return;
-        }
+        // try {
+        //     const decoded = jwtDecode(token);
+        //     if (decoded.role !== 'admin') {
+        //         router.push('/');
+        //         return;
+        //     }
+        // } catch (error) {
+        //     console.error('Token validation error:', error);
+        //     router.push('/');
+        //     return;
+        // }
 
         const fetchData = async () => {
             try {
