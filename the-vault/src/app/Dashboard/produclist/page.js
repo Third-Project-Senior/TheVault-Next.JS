@@ -1,23 +1,21 @@
 'use client'
 import axios from 'axios'
-import React from 'react'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AddProduct from '../../../components/AddProduct.jsx'
 import { jwtDecode } from 'jwt-decode'
 
 function ProductList() {
   const token = localStorage.getItem('token')
   const [ProductList, setProductList] = useState([])
-  const [hidden, sethidden] = useState( null)
+  const [hidden, sethidden] = useState(null)
   const [name, setname] = useState('')
   const [price, setprice] = useState('')
   const [stock, setstock] = useState('')
   const [search, setsearch] = useState('')
   const [hiddenAdd, sethiddenAdd] = useState(true)
 
-
-  if (!token||jwtDecode(token).role !== 'admin') {
-    window.location.href = '/' 
+  if (!token || jwtDecode(token).role !== 'admin') {
+    window.location.href = '/'
   }
 
   const fetchProducts = async () => {
@@ -31,101 +29,103 @@ function ProductList() {
     } catch (error) {
       console.log(error)
     }
-    // fetch('http://localhost:3000/api/product' {
-    //   headers: {
-    //     'Authorization': `Bearer ${token}`
-    //   }
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => setProductList(data))
-    //   .catch((error) => console.error('Error fetching products:', error))
   }
+
   useEffect(() => {
     fetchProducts()
   }, [])
 
   return (
-    <>
-   
+    <div className="p-6 max-w-7xl mx-auto">
+      <h1 className="text-3xl font-bold mb-6 text-gray-800">Product List</h1>
 
-    <div className="productlist-container">
-      <h1 className="productlist-title">Product List</h1>
-      <div className='filter-add'>
-        <input type="text" className='search' placeholder='Search for a product' onChange={(e)=>setsearch(e.target.value)} />
-        <button className="add-btn" onClick={() => {
-          sethiddenAdd(!hiddenAdd)
-          }}>Add Product</button>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
+        <input
+          type="text"
+          className="px-4 py-2 border rounded-md w-full md:w-1/3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Search for a product"
+          onChange={(e) => setsearch(e.target.value)}
+        />
+        <button
+          className="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700"
+          onClick={() => sethiddenAdd(!hiddenAdd)}
+        >
+          Add Product
+        </button>
       </div>
-        <div className='add-product' hidden={hiddenAdd}>
-            <AddProduct sethiddenAdd={sethiddenAdd} hiddenAdd={hiddenAdd} />
-        </div>
-      <div className="productlist-table-wrapper">
-        <table className="productlist-table">
+
+      <div className={`${hiddenAdd ? 'hidden' : 'block'} mb-6`}>
+        <AddProduct sethiddenAdd={sethiddenAdd} hiddenAdd={hiddenAdd} />
+      </div>
+
+      <div className="overflow-x-auto">
+        <table className="min-w-full border border-gray-300 rounded-lg">
           <thead>
-            <tr>
-              <th className="productlist-header">Product ID</th>
-              <th className="productlist-header">Product Name</th>
-              <th className="productlist-header">Product Description</th>
-              <th className="productlist-header">Price</th>
-              <th className="productlist-header">Stock</th>
-              <th className="productlist-header">Actions</th>
+            <tr className="bg-gray-100">
+              {['Product ID', 'Product Name', 'Product Description', 'Price', 'Stock', 'Actions'].map((header, i) => (
+                <th key={i} className="text-left px-4 py-3 border-b text-sm font-semibold text-gray-700">
+                  {header}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
-            {ProductList.filter((e)=>e.name.toLowerCase().includes(search.toLowerCase())).map((product) => (
-              <tr key={product.id} className="productlist-row">
-                <td className="productlist-cell">{product.id}</td>
-                <td className="productlist-cell">
+            {ProductList.filter((e) =>
+              e.name.toLowerCase().includes(search.toLowerCase())
+            ).map((product) => (
+              <tr key={product.id} className="hover:bg-gray-50 transition-colors">
+                <td className="px-4 py-3 border-b">{product.id}</td>
+                <td className="px-4 py-3 border-b">
                   {product.name}
                   <input
-                    hidden={hidden!==product.id}
+                    hidden={hidden !== product.id}
                     type="text"
                     defaultValue={product.name}
-                    className="productlist-input"
+                    className="mt-2 block w-full px-2 py-1 border rounded-md"
                     onChange={(e) => setname(e.target.value)}
                   />
                 </td>
-                <td className="productlist-cell">
+                <td className="px-4 py-3 border-b">
                   {product.description}
                   <input
-                    hidden={hidden!==product.id}
+                    hidden={hidden !== product.id}
                     type="text"
                     defaultValue={product.description}
-                    className="productlist-input"
+                    className="mt-2 block w-full px-2 py-1 border rounded-md"
                     onChange={(e) => setname(e.target.value)}
                   />
                 </td>
-                <td className="productlist-cell">
+                <td className="px-4 py-3 border-b">
                   {product.price}
                   <input
-                    hidden={hidden!==product.id}
+                    hidden={hidden !== product.id}
                     type="number"
                     defaultValue={product.price}
-                    className="productlist-input"
+                    className="mt-2 block w-full px-2 py-1 border rounded-md"
                     onChange={(e) => setprice(e.target.value)}
                   />
                 </td>
-                <td className="productlist-cell">
+                <td className="px-4 py-3 border-b">
                   {product.quantity}
                   <input
-                    hidden={hidden!==product.id}
+                    hidden={hidden !== product.id}
                     type="number"
                     defaultValue={product.quantity}
-                    className="productlist-input"
+                    className="mt-2 block w-full px-2 py-1 border rounded-md"
                     onChange={(e) => setstock(e.target.value)}
                   />
                 </td>
-                <td className="productlist-cell productlist-actions">
+                <td className="px-4 py-3 border-b space-x-2">
                   <button
-                    hidden={hidden===product.id}
-                    className="edit-btn"
+                    hidden={hidden === product.id}
+                    className="bg-blue-400 hover:bg-yellow-500 text-white px-3 py-1 rounded-md"
                     onClick={() => sethidden(product.id)}
                   >
                     Edit
                   </button>
                   <button
-                    hidden={hidden!==product.id}
-                    className="edit-btn"
+                    hidden={hidden !== product.id}
+                    className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-md"
                     onClick={async () => {
                       try {
                         await axios.put(
@@ -154,7 +154,7 @@ function ProductList() {
                     Save
                   </button>
                   <button
-                    className="delete-btn"
+                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md"
                     onClick={async () => {
                       try {
                         await axios.delete(
@@ -181,7 +181,6 @@ function ProductList() {
         </table>
       </div>
     </div>
-    </>
   )
 }
 
