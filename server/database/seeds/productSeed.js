@@ -100,7 +100,80 @@ const seedProducts = async () => {
                 quantity: 2,
                 image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsY3MWVxXUKJB3FaIaLpkEpvyBpndRw2dw_1AYLys721GieRoQ-9tBZHsQBQ2MCnmecLE&usqp=CAU',
                 categoryId: Military.id
+            },
+            {
+                name: 'Retro Typewriter',
+                description: 'Vintage 1940s manual typewriter in excellent condition',
+                price: 279.99,
+                quantity: 3,
+                image: 'https://m.media-amazon.com/images/I/71b3ABbZ4zL._AC_UF894,1000_QL80_.jpg',
+                categoryId: Electronics.id
+            },
+            {
+                name: 'Old Film Camera',
+                description: 'Classic 35mm film camera for photography lovers',
+                price: 189.99,
+                quantity: 4,
+                image: 'https://img2.cgtrader.com/items/3177072/188ca0b033/large/3d-old-film-camera-3d-model-rigged-blend.jpg',
+                categoryId: Electronics.id
+            },
+            {
+                name: 'Victorian Parasol',
+                description: 'Handcrafted lace parasol from the Victorian era',
+                price: 129.99,
+                quantity: 2,
+                image: 'https://recollections.biz/blog/wp-content/uploads/2022/03/parasol-1880MET.jpg',
+                categoryId: Clothes.id
+            },
+            {
+                name: 'Antique Telescope',
+                description: '19th-century brass telescope with tripod',
+                price: 649.99,
+                quantity: 1,
+                image: 'https://redcarpettelescopes.com/cdn/shop/products/Hampton_Nautical_64-Inch_Floor_Standing_Antique_Brass_Griffith_Astro_Telescope_1200x600_crop_center.jpg?v=1706928359'
+            },
+            {
+                name: 'Classic Phonograph',
+                description: 'Early 1900s phonograph with brass horn and wooden base',
+                price: 559.99,
+                quantity: 2,
+                image: 'https://www.pyleaudio.com/1000/PTCDCS3UIP.jpg',
+                categoryId: Electronics.id
+            },
+            {
+                name: 'Antique Wall Clock',
+                description: 'Pendulum wall clock from 1800s, still ticking',
+                price: 249.99,
+                quantity: 5,
+                image: 'https://www.sellingantiques.co.uk/img/categories_img/antique-clocks/antique-wall-clocks.jpg',
+                categoryId: Mechanicals.id
+            },
+            {
+                name: 'Renaissance Gown',
+                description: 'Luxurious 16th-century styled gown with gold embroidery',
+                price: 349.99,
+                quantity: 1,
+                image: 'https://www.medievalcollectibles.com/wp-content/uploads/2019/03/MCI-105.jpg',
+                categoryId: Clothes.id
+            },
+            {
+                name: 'Old World Globe',
+                description: 'Antique globe showing 18th-century world geography',
+                price: 229.99,
+                quantity: 3,
+                image: 'https://i5.walmartimages.com/seo/HeroNeo-Geography-Globe-Antique-World-Globe-with-Stand-Full-Earth-Geography-Map_83d1f110-9cbf-41af-8e88-8717899b3ec4.865a2bafa576f321ac9386edb0e1d426.jpeg',
+                categoryId: Books.id
+            },
+            {
+                name: 'Vintage Military Binoculars',
+                description: 'Used during WWII, original leather case included',
+                price: 179.99,
+                quantity: 6,
+                image: 'https://i0.wp.com/roots-revived.com/wp-content/uploads/2022/05/antique-1800s-19th-century-vintage-french-military-army-navy-binoculars-decor-leather-case-black-gear-19.jpg?fit=3468%2C3468&ssl=1',
+                categoryId: Military.id
             }
+            
+            
         ];
 
         await Product.bulkCreate(products);

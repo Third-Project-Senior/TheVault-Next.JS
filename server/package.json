@@ -13,6 +13,7 @@
     "products:seed": "node database/seeds/productSeed.js"
   },
   "dependencies": {
+    "@react-oauth/google": "^0.12.1",
     "@sequelize/postgres": "^7.0.0-alpha.46",
     "axios": "^1.8.4",
     "bcrypt": "^5.1.1",
