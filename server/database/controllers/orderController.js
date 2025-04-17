@@ -1,23 +1,45 @@
-const { Order, User } = require('../index');
+const { Order, User, Product, OrderItem } = require('../index');
 
 const orderController = {
     // Create a new order
     createOrder: async (req, res) => {
         try {
-            const { userId, totalAmount, shippingAddress, items, paymentMethod } = req.body;
+            const { userId, totalAmount, items, paymentMethod } = req.body;
             
+            // Create the order
             const order = await Order.create({
                 userId,
                 totalAmount,
-                shippingAddress,
-                items,
                 paymentMethod,
-                status: 'pending',
-                paymentStatus: 'pending'
+                
             });
 
-            res.status(201).json(order);
+            // Create order items
+            const orderItems = await Promise.all(
+                items.map(item => 
+                    OrderItem.create({
+                        orderId: order.id,
+                        productId: item.productId,
+                        quantity: item.quantity,
+                        price: item.price
+                    })
+                )
+            );
+
+            // Fetch the complete order with items
+            const completeOrder = await Order.findByPk(order.id, {
+                include: [{
+                    model: Product,
+                    as: 'items',
+                    through: {
+                        attributes: ['quantity', 'price']
+                    }
+                }]
+            });
+
+            res.status(201).json(completeOrder);
         } catch (error) {
+            console.error('Error creating order:', error);
             res.status(500).json({ error: error.message });
         }
     },
@@ -28,12 +50,37 @@ const orderController = {
             const { userId } = req.params;
             
             const orders = await Order.findAll({
-                // where: { userId },
+                where: { userId },
+                include: [{
+                    model: Product,
+                    as: 'items',
+                    through: {
+                        attributes: ['quantity', 'price']
+                    }
+                }],
                 order: [['createdAt', 'DESC']]
             });
 
-            res.json(orders);
+            // Transform the data to match the expected format
+            const transformedOrders = orders.map(order => {
+                const plainOrder = order.get({ plain: true });
+                return {
+                    ...plainOrder,
+                    items: plainOrder.items.map(item => ({
+                        quantity: item.OrderItem.quantity,
+                        product: {
+                            id: item.id,
+                            name: item.name,
+                            price: item.OrderItem.price,
+                            image: item.image
+                        }
+                    }))
+                };
+            });
+
+            res.json(transformedOrders);
         } catch (error) {
+            console.error('Error fetching user orders:', error);
             res.status(500).json({ error: error.message });
         }
     },
@@ -48,6 +95,12 @@ const orderController = {
                     model: User,
                     as: 'user',
                     attributes: ['id', 'name', 'email']
+                }, {
+                    model: Product,
+                    as: 'items',
+                    through: {
+                        attributes: ['quantity', 'price']
+                    }
                 }]
             });
 

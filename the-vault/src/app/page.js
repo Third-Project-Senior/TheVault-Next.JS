@@ -1,6 +1,7 @@
 'use client';
 import React,{useEffect} from 'react';
-import FeaturedItems from './home/FeaturedItems'; // Adjust path as needed
+import FeaturedItems from './home/FeaturedItems';
+import Categories from './home/Categories';
 
 const Home = () => {
   useEffect(()=>{()=> window.location.reload()},[])
@@ -35,6 +36,9 @@ const Home = () => {
           />
         </div>
       </div>
+
+      {/* Categories Section */}
+      <Categories />
 
       {/* Featured Items Section */}
       <section className="py-16 bg-gray-100">

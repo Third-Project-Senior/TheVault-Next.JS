@@ -25,33 +25,29 @@ module.exports = (connection, DataTypes) => {
                 isIn: [['pending', 'processing', 'shipped', 'delivered', 'cancelled']]
             }
         },
-        shippingAddress: {
-            type: DataTypes.JSONB,
-            allowNull: false,
-        },
-        items: {
-            type: DataTypes.ARRAY(DataTypes.JSONB),
-            allowNull: false,
-        },
-        paymentMethod: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
         paymentStatus: {
             type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: 'pending',
+            defaultValue: 'paid',
             validate: {
                 isIn: [['pending', 'paid', 'failed', 'refunded']]
             }
         }
     });
 
-    // Define the association with User
+    // Define associations
     Order.associate = (models) => {
+        // Association with User
         Order.belongsTo(models.User, {
             foreignKey: 'userId',
             as: 'user'
+        });
+
+        // Association with Products through OrderItems
+        Order.belongsToMany(models.Product, {
+            through: 'OrderItems',
+            foreignKey: 'orderId',
+            as: 'items'
         });
     };
 
