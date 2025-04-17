@@ -44,6 +44,47 @@ const orderController = {
         }
     },
 
+    // get all orders
+
+    getOrders: async (req, res) => {
+        try {
+            
+            const orders = await Order.findAll({
+                
+                include: [{
+                    model: Product,
+                    as: 'items',
+                    through: {
+                        attributes: ['quantity', 'price']
+                    }
+                }],
+                order: [['createdAt', 'DESC']]
+            });
+
+            // Transform the data to match the expected format
+            const transformedOrders = orders.map(order => {
+                const plainOrder = order.get({ plain: true });
+                return {
+                    ...plainOrder,
+                    items: plainOrder.items.map(item => ({
+                        quantity: item.OrderItem.quantity,
+                        product: {
+                            id: item.id,
+                            name: item.name,
+                            price: item.OrderItem.price,
+                            image: item.image
+                        }
+                    }))
+                };
+            });
+
+            res.json(transformedOrders);
+        } catch (error) {
+            console.error('Error fetching user orders:', error);
+            res.status(500).json({ error: error.message });
+        }
+    },
+
     // Get all orders for a specific user
     getUserOrders: async (req, res) => {
         try {

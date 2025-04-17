@@ -9,6 +9,9 @@ router.use(authenticate);
 // Create a new order
 router.post('/', orderController.createOrder);
 
+// Get all orders
+router.get('/', orderController.getOrders);
+
 // Get all orders for a specific user
 router.get('/user/:userId', orderController.getUserOrders);
 

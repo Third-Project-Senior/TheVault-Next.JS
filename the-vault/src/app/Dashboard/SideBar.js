@@ -14,6 +14,11 @@ export default function SideBar() {
       href: '/Dashboard/Overview',
     },
     {
+      title: 'Users',
+      icon: Users,
+      href: '/Dashboard/UserList',
+    },
+    {
       title: 'Products',
       icon: Package,
       href: '/Dashboard/produclist',
@@ -23,16 +28,11 @@ export default function SideBar() {
       icon: ShoppingCart,
       href: '/Dashboard/Orders',
     },
-    {
-      title: 'Users',
-      icon: Users,
-      href: '/Dashboard/UserList',
-    },
-    {
-      title: 'Settings',
-      icon: Settings,
-      href: '/Dashboard/settings',
-    },
+    // {
+    //   title: 'Settings',
+    //   icon: Settings,
+    //   href: '/Dashboard/settings',
+    // },
     {
       title: 'Inentory',
       icon: Package,
