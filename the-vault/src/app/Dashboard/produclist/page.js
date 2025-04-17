@@ -250,7 +250,7 @@ function ProductList() {
                           </button>
                         )}
                         <button
-                          className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                          className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
                           onClick={() => handleDelete(product.id)}
                         >
                           <Trash2 className="h-4 w-4 mr-1" />

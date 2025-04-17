@@ -28,11 +28,11 @@ export default function SideBar() {
       icon: ShoppingCart,
       href: '/Dashboard/Orders',
     },
-    {
-      title: 'Users',
-      icon: Users,
-      href: '/Dashboard/UserList',
-    },
+    // {
+    //   title: 'Users',
+    //   icon: Users,
+    //   href: '/Dashboard/UserList',
+    // },
     {
       title: 'calendar',
       icon: LayoutDashboard,
