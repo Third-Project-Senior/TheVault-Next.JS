@@ -111,6 +111,7 @@ function Login() {
     const handleGoogleSuccess = (response) => {
         const decoded = jwtDecode(response.credential)
         console.log(decoded)
+        
 
         // Add your Google login logic here
     }
