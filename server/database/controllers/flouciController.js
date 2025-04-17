@@ -43,7 +43,7 @@ console.log(result , "result");
   },
    verify : async (req, res) => {
     const paymentId = req.params.paymentId 
-  console.log(paymentId , "s");
+    console.log(paymentId , "s");
   
     if (!paymentId) {
       return res.status(400).json({ status: 'error', message: 'Missing payment ID' });
@@ -60,15 +60,32 @@ console.log(result , "result");
       try {
         const response = await axios.get(url, { headers });
   
-      console.log('Flouci Verification Response:', response.data);  
+        console.log('Flouci Verification Response:', response.data);  
   
-      if (response.data.result.status === 'SUCCESS') {
-        return res.json({ status: 'success' });
-      } 
-    } catch (error) {
-      console.error("Error verifying payment:", error.response ? error.response.data : error.message);
-      return res.status(500).json({ status: 'error', message: 'Server error' });
-    } }
+        if (response.data.result.status === 'SUCCESS') {
+          // Return payment details for order creation
+          return res.json({ 
+            status: 'success',
+            paymentId: paymentId,
+            transactionDetails: {
+              date: new Date().toISOString(),
+              provider: 'flouci',
+              amount: response.data.result.amount / 1000, // Convert back from millimes
+              paymentReference: response.data.result.payment_id
+            }
+          });
+        } else {
+          return res.status(400).json({ 
+            status: 'failed', 
+            message: 'Payment was not successful', 
+            paymentStatus: response.data.result.status 
+          });
+        }
+      } catch (error) {
+        console.error("Error verifying payment:", error.response ? error.response.data : error.message);
+        return res.status(500).json({ status: 'error', message: 'Server error' });
+      }
+    }
     
   
 };

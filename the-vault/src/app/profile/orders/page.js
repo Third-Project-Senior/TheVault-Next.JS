@@ -27,7 +27,7 @@ const OrdersPage = () => {
       const userId = decodedToken.id;
 
       // Use the correct API endpoint with user ID
-      const response = await axios.get(`http://localhost:3000/api/order/user/${userId}`, {
+      const response = await axios.get(`http://localhost:3000/api/orders/user/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

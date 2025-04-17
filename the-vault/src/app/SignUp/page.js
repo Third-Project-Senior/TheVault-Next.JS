@@ -65,7 +65,7 @@ function SignUp() {
                 timer: 1500
             })
 
-            router.push('/Login')
+            router.push('/login')
         } catch (error) {
             const errorMsg = error.response?.data?.message || 'Failed to create account'
             
