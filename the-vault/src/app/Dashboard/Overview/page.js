@@ -48,22 +48,32 @@ function Overview() {
                     'Authorization': `Bearer ${token}`
                 };
 
-                const [usersRes, productsRes] = await Promise.all([
+                const [usersRes, productsRes, ordersRes] = await Promise.all([
                     axios.get('http://localhost:3000/api/user', { headers }),
                     axios.get('http://localhost:3000/api/product', { headers }),
+                    axios.get('http://localhost:3000/api/orders',{ headers })
+
                 ]);
 
+
                 const totalProducts = productsRes.data.reduce((sum, product) => sum + (product.quantity || 0), 0);
+                // process sales
+                const Orders = ordersRes.data
+                console.log(Orders);
+                
+                const totalsales = Orders.reduce((sum,order)=>sum+parseInt(order.totalAmount),0)
+                
 
                 // Process user signups data
                 const users = usersRes.data;
                 const signupData = processUserSignups(users);
+                
 
                 setStats({
                     users: users.length,
                     products: totalProducts,
-                    sales: "N/A",
-                    revenue: "N/A"
+                    sales: totalsales,
+                    revenue: (totalsales*80/100).toFixed(1)
                 });
 
                 setUserSignups(signupData);
@@ -77,6 +87,8 @@ function Overview() {
 
         fetchData();
     }, [router]);
+
+
 
     const processUserSignups = (users) => {
         // Get dates for the last week
@@ -226,7 +238,7 @@ function Overview() {
                                 </div>
                                 <div className="ml-5 w-0 flex-1">
                                     <dl>
-                                        <dt className="text-sm font-medium text-gray-500 truncate">Total Revenue</dt>
+                                        <dt className="text-sm font-medium text-gray-500 truncate">Total Revenue </dt>
                                         <dd className="flex items-baseline">
                                             <div className="text-2xl font-semibold text-gray-900">{stats.revenue || 'N/A'}</div>
                                         </dd>
@@ -278,8 +290,7 @@ function Overview() {
                                             color: '#9c27b0',
                                         },
                                     ]}
-                                    height={350}
-                                    width={800}
+                                  
                                 />
                             </div>
                         </div>
@@ -287,8 +298,8 @@ function Overview() {
 
                     <div className="lg:col-span-1 space-y-8">
                         <ProgressCard
-                            progress={75}
-                            title="Monthly Target"
+                            progress={(stats.sales/5000*100).toFixed(1)}
+                            title="Monthly Target :5000"
                             description="Track your monthly sales progress"
                             onDetailsClick={() => console.log('Details clicked')}
                         />

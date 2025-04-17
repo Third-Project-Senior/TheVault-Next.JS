@@ -14,6 +14,11 @@ export default function SideBar() {
       href: '/Dashboard/Overview',
     },
     {
+      title: 'Users',
+      icon: Users,
+      href: '/Dashboard/UserList',
+    },
+    {
       title: 'Products',
       icon: Package,
       href: '/Dashboard/produclist',
