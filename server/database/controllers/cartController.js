@@ -34,26 +34,68 @@ module.exports = {
 ,  
 
   addToCart: async (req, res) => {
-    const {  productId, quantity  , userId} = req.body;
+    const { productId, quantity, userId } = req.body;
+    console.log('Received cart request:', { productId, quantity, userId });
+
+    if (!productId || !quantity || !userId) {
+      return res.status(400).json({ 
+        message: "Missing required fields",
+        required: ["productId", "quantity", "userId"]
+      });
+    }
 
     try {
       const product = await Product.findByPk(productId);
+      console.log('Found product:', product);
   
-      if (!product) return res.status(404).json({ message: "Product not found" });
+      if (!product) {
+        console.log('Product not found with ID:', productId);
+        return res.status(404).json({ message: "Product not found" });
+      }
 
-      const totalPrice = product.price * quantity;
+      // Ensure price is a number and quantity is a positive integer
+      const price = parseFloat(product.price);
+      const qty = parseInt(quantity);
+      
+      if (isNaN(price) || isNaN(qty) || qty <= 0) {
+        return res.status(400).json({ 
+          message: "Invalid price or quantity",
+          price: product.price,
+          quantity: quantity
+        });
+      }
+
+      const totalPrice = (price * qty).toFixed(2);
+      console.log('Calculated total price:', totalPrice);
 
       const cartItem = await Cart.create({
         userId,
         productId,
-        quantity,
+        quantity: qty,
         totalPrice,
       });
+      console.log('Created cart item:', cartItem);
 
-      res.status(201).json({ message: "Product added to cart", cartItem });
+      res.status(201).json({ 
+        message: "Product added to cart", 
+        cartItem: {
+          id: cartItem.id,
+          userId: cartItem.userId,
+          productId: cartItem.productId,
+          quantity: cartItem.quantity,
+          totalPrice: cartItem.totalPrice
+        }
+      });
     } catch (error) {
-      console.error("Error adding to cart:", error);
-      res.status(500).json({ message: "Internal server error" });
+      console.error("Detailed error adding to cart:", {
+        message: error.message,
+        stack: error.stack,
+        name: error.name
+      });
+      res.status(500).json({ 
+        message: "Internal server error",
+        error: error.message 
+      });
     }
   },
 
