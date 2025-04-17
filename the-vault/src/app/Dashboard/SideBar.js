@@ -29,9 +29,9 @@ export default function SideBar() {
       href: '/Dashboard/UserList',
     },
     {
-      title: 'Settings',
-      icon: Settings,
-      href: '/Dashboard/settings',
+      title: 'calendar',
+      icon: LayoutDashboard,
+      href: '/Dashboard/Calendar',
     },
     {
       title: 'Inentory',
