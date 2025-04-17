@@ -263,7 +263,7 @@ function Overview() {
                     <div className="flex items-center justify-between">
                         <div>
                             <h2 className="text-sm font-medium text-gray-500 uppercase tracking-wide">Total Sales</h2>
-                            <p className="mt-2 text-3xl font-semibold text-gray-900">{stats.sales}</p>
+                            <p className="mt-2 text-3xl font-semibold text-gray-900">N/A</p>
                         </div>
                         <CreditCard className="h-8 w-8 text-purple-500" />
                     </div>
