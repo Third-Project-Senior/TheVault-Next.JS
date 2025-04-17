@@ -25,14 +25,6 @@ module.exports = (connection, DataTypes) => {
                 isIn: [['pending', 'processing', 'shipped', 'delivered', 'cancelled']]
             }
         },
-        shippingAddress: {
-            type: DataTypes.JSON,
-            allowNull: true,
-        },
-        paymentMethod: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
         paymentStatus: {
             type: DataTypes.STRING,
             allowNull: false,

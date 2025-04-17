@@ -15,6 +15,6 @@ router.use('/cart', cartRouter)
 router.use('/payment', payementRouter)
 router.use('/category', CategRouter)
 router.use('/comment', CommentRouter)
-router.use('/order', orderRouter)
+router.use('/orders', orderRouter)
 
 module.exports = router

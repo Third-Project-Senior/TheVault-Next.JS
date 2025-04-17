@@ -4,16 +4,14 @@ const orderController = {
     // Create a new order
     createOrder: async (req, res) => {
         try {
-            const { userId, totalAmount, shippingAddress, items, paymentMethod } = req.body;
+            const { userId, totalAmount, items, paymentMethod } = req.body;
             
             // Create the order
             const order = await Order.create({
                 userId,
                 totalAmount,
-                shippingAddress,
                 paymentMethod,
-                status: 'pending',
-                paymentStatus: 'pending'
+                
             });
 
             // Create order items
