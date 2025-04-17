@@ -10,7 +10,7 @@ function Orders() {
     const fetchOrders = async () => {
       try {
         // Replace with your actual API endpoint
-        const response = await axios.get('http://localhost:4000/api/orders');
+        const response = await axios.get('http://localhost:3000/api/orders');
         setOrders(response.data);
         setLoading(false);
       } catch (error) {

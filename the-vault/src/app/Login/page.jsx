@@ -83,7 +83,7 @@ function Login() {
             const redirectPath = decodedToken.role === 'admin' 
                 ? '/dashboard/Overview' 
                 : decodedToken.role === 'user' 
-                    ? '/home' 
+                    ? '/' 
                     : null
 
             if (!redirectPath) {

@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -44,18 +44,18 @@ function Overview() {
                 };
 
                 const [usersRes, productsRes, salesRes] = await Promise.all([
-                    axios.get('http://localhost:4000/api/user', { headers }),
-                    axios.get('http://localhost:4000/api/product', { headers }),
-                    axios.get('http://localhost:4000/api/sales', { headers })
+                    axios.get('http://localhost:3000/api/user', { headers }),
+                    axios.get('http://localhost:3000/api/product', { headers }),
+                    // axios.get('http://localhost:3000/api/order', { headers })
                 ]);
 
                 const totalProducts = productsRes.data.reduce((sum, product) => sum + product.quantity, 0);
-                const totalRevenue = salesRes.data.reduce((sum, sale) => sum + sale.total, 0);
+                const totalRevenue = "N/A";
 
                 setStats({
                     users: usersRes.data.length,
                     products: totalProducts,
-                    sales: salesRes.data.length,
+                    sales: "N/A",
                     revenue: totalRevenue
                 });
                 setLoading(false);
@@ -130,7 +130,7 @@ function Overview() {
                     <div className="flex items-center justify-between">
                         <div>
                             <h2 className="text-sm font-medium text-gray-500 uppercase tracking-wide">Total Revenue</h2>
-                            <p className="mt-2 text-3xl font-semibold text-gray-900">${stats.revenue.toFixed(2)}</p>
+                            <p className="mt-2 text-3xl font-semibold text-gray-900">N/A</p>
                         </div>
                         <DollarSign className="h-8 w-8 text-yellow-500" />
                     </div>
