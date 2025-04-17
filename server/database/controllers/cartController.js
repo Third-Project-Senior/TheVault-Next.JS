@@ -91,5 +91,18 @@ module.exports = {
       console.error("Error removing cart item:", error);
       res.status(500).json({ message: "Internal server error" });
     }
+  },
+  clearcart:async(req,res)=>{
+    const {id} =req.params
+    try {
+      await Cart.destroy({where:{userId:id}})
+      res.status(204).json("cart cleared")
+    } catch (error) {
+      console.error("Error Clearing cart:", error);
+      res.status(500).json({ message: "Internal server error" });
+      console.log(req.params);
+      
+    }
+
   }
 };
