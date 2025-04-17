@@ -143,7 +143,7 @@ const Navbar = () => {
             )}
           </Link>
           {isLoggedIn && <Link href="/profile" className="block hover:bg-gray-700 px-3 py-2 rounded">Profile</Link>}
-          {userRole === 'admin' && <Link href="/admin" className="block hover:bg-gray-700 px-3 py-2 rounded">Admin</Link>}
+          {userRole === 'admin' && <Link href="/Dashboard/Overview" className="block hover:bg-gray-700 px-3 py-2 rounded">Admin</Link>}
           {isLoggedIn ? (
             <button onClick={handleLogout} className="block w-full text-left hover:bg-gray-700 px-3 py-2 rounded">
               Logout

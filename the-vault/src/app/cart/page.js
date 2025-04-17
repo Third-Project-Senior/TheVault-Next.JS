@@ -21,6 +21,8 @@ const Cart = () => {
       const response = await axios.get(`http://localhost:3000/api/cart/${id}`);
       setCartItems(response.data);
       localStorage.setItem('cart', JSON.stringify(response.data));
+     
+      
     } catch (err) {
       console.log(err);
     }
@@ -55,9 +57,10 @@ const Cart = () => {
     );
   };
 
-  const handleCheckout = async (id) => {
+  const handleCheckout = async (userId) => {
     const totalAmount = calculateTotal();
     const amountInMillimes = totalAmount * 1000;
+    
 
     try {
       const response = await axios.post(
@@ -67,7 +70,7 @@ const Cart = () => {
 
       const paymentUrl = response.data.result.link;
 
-      await axios.delete(`http://localhost:3000/api/cart/${id}`);
+      await axios.delete(`http://localhost:3000/api/cart/clear/${userId}`);
 
       Swal.fire({
         title: "Proceed to Checkout!",
@@ -187,7 +190,7 @@ const Cart = () => {
                   confirmButtonText: "Checkout!"
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    handleCheckout(cartItems[0].id);
+                    handleCheckout(userId);
                   }
                 });
               }}
