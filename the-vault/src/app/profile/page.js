@@ -28,7 +28,15 @@ const Profile = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        
+
+        // Swal.fire({
+        //   title: "Welcome Back!",
+        //   text: "You have successfully logged in.",
+        //   icon: "success",
+        //   position: 'top-end',
+        //   showConfirmButton: false,
+        //   timer: 1500,
+        // });
 
         setUserData(response.data);
       } catch (error) {
@@ -128,20 +136,20 @@ const Profile = () => {
           <h2 className="text-xl font-semibold text-blue-600 mb-2">Actions</h2>
           <div className="flex gap-4 flex-wrap">
             <button
-              onClick={() => router.push('/orders')}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              onClick={() => router.push('/profile/orders')}
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
             >
               View Your Orders
             </button>
             <button
-              onClick={() => router.push('/profile/settings')}
-              className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+              onClick={() => router.push('/settings')}
+              className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
             >
               Account Settings
             </button>
             <button
               onClick={handleLogout}
-              className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+              className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
             >
               Logout
             </button>

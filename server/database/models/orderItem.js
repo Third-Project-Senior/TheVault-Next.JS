@@ -1,27 +1,36 @@
 module.exports = (connection, DataTypes) => {
-    const cart = connection.define('cart', {
+    const OrderItem = connection.define('OrderItem', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
-            autoIncrement: true,
+            autoIncrement: true
         },
-        userId: {
+        orderId: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: 'Orders',
+                key: 'id'
+            }
         },
         productId: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: 'Products',
+                key: 'id'
+            }
         },
         quantity: {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 1
         },
-        totalPrice: {
+        price: {
             type: DataTypes.DECIMAL(10, 2),
             allowNull: false
         }
     });
-    return cart;
-}
+
+    return OrderItem;
+}; 

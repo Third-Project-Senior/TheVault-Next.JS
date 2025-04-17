@@ -3,19 +3,27 @@ import React from 'react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import OneProduct from './OneProduct.jsx';
+import { useSearchParams } from 'next/navigation';
 
 const AllProducts = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [categories, setCategories] = useState(['all', 'electronic', 'clothing', 'books', 'furniture']);
+  const [categories, setCategories] = useState(['all']);
   const [searchTerm, setSearchTerm] = useState('');
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     getData();
     getCategories();
-  }, []);
+    
+    // Get category from URL parameter
+    const categoryFromUrl = searchParams.get('category');
+    if (categoryFromUrl) {
+      setSelectedCategory(categoryFromUrl);
+    }
+  }, [searchParams]);
 
   const getCategories = async () => {
     try {
@@ -40,7 +48,9 @@ const AllProducts = () => {
   };
 
   const filteredProducts = data.filter(product => {
-    const matchesCategory = selectedCategory === 'all' || product.categoryId === selectedCategory.id;
+    const matchesCategory = selectedCategory === 'all' || 
+      (product.categoryId && categories.find(cat => 
+        cat.name && cat.name.toLowerCase() === selectedCategory.toLowerCase())?.id === product.categoryId);
     const matchesSearch = product.name?.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
@@ -69,7 +79,9 @@ const AllProducts = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">All Products</h1>
+      <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">
+        {selectedCategory === 'all' ? 'All Products' : `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Products`}
+      </h1>
 
       {/* Search Input */}
       <div className="flex justify-center mb-8">
@@ -87,13 +99,14 @@ const AllProducts = () => {
           <button
             key={category.id || category}
             className={`px-4 py-2 rounded-full font-medium transition-colors duration-200 ${
-              selectedCategory === category 
+              (category === 'all' && selectedCategory === 'all') || 
+              (category.name && category.name.toLowerCase() === selectedCategory.toLowerCase())
                 ? 'bg-blue-600 text-white shadow-md' 
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
-            onClick={() => setSelectedCategory(category)}
+            onClick={() => setSelectedCategory(category === 'all' ? 'all' : category.name.toLowerCase())}
           >
-            {category.name || category.charAt(0).toUpperCase() + category.slice(1)}
+            {category === 'all' ? 'All' : category.name}
           </button>
         ))}
       </div>

@@ -46,7 +46,7 @@ const seedProducts = async () => {
                 price: 149.99,
                 quantity: 4,
                 image: 'https://i.etsystatic.com/16495683/r/il/823ff1/4357334694/il_570xN.4357334694_si9f.jpg',
-                categoryId: Clothes.id
+                categoryId: Military.id
             },
             {
                 
