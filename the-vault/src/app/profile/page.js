@@ -104,6 +104,19 @@ const Profile = () => {
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg mt-10">
       <div className="mb-8 text-center">
+        {/* Profile Picture */}
+        {userData.image ? (
+          <img
+            src={userData.image}
+            alt="Profile picture"
+            className="w-24 h-24 rounded-full mx-auto object-cover mb-4"
+          />
+        ) : (
+          <div className="w-50 h-50 rounded-full bg-gray-300 flex items-center justify-center mx-auto mb-4">
+            <span className="text-gray-500">No Image</span>
+          </div>
+        )}
+
         <h1 className="text-3xl font-bold text-gray-800">Welcome, {userData.name}</h1>
         <p className="text-gray-500">Manage your account details</p>
       </div>

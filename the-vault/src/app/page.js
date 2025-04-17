@@ -4,6 +4,8 @@ import FeaturedItems from './home/FeaturedItems';
 import Categories from './home/Categories';
 
 const Home = () => {
+  useEffect(()=>{()=> window.location.reload()},[])
+
   return (
     <div className="bg-white">
       {/* Hero Section */}
@@ -30,7 +32,7 @@ const Home = () => {
           <img
             src="https://images-cdn.ubuy.co.in/635e0b1d3f834e34592dc8ad-metal-antique-vintage-car-model.jpg"
             alt="Antique Collection"
-            className="w-full h-auto rounded-xl shadow-lg"
+            className="w-full h-auto rounded-xl "
           />
         </div>
       </div>

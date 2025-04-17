@@ -97,6 +97,7 @@ const Cart = () => {
   const handleCheckout = async () => {
     const totalAmount = calculateTotal();
     const amountInMillimes = totalAmount * 1000;
+    
 
     try {
       // Step 1: Initiate payment
