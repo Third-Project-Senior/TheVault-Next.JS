@@ -31,14 +31,7 @@ function ProductList() {
     } catch (error) {
       console.log(error)
     }
-    // fetch('http://localhost:3000/api/product' {
-    //   headers: {
-    //     'Authorization': `Bearer ${token}`
-    //   }
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => setProductList(data))
-    //   .catch((error) => console.error('Error fetching products:', error))
+  
   }
   useEffect(() => {
     fetchProducts()
