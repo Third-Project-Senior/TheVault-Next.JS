@@ -1,8 +1,10 @@
 'use client';
-import React from 'react';
+import React,{useEffect} from 'react';
 import FeaturedItems from './home/FeaturedItems'; // Adjust path as needed
 
 const Home = () => {
+  useEffect(()=>{()=> window.location.reload()},[])
+
   return (
     <div className="bg-white">
       {/* Hero Section */}

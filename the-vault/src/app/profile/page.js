@@ -29,14 +29,7 @@ const Profile = () => {
           },
         });
 
-        Swal.fire({
-          title: "Welcome Back!",
-          text: "You have successfully logged in.",
-          icon: "success",
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+      
 
         setUserData(response.data);
       } catch (error) {

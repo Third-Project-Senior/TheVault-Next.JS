@@ -1,18 +1,18 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
-import {jwtDecode} from 'jwt-decode';
-import {useParams} from 'next/navigation'
+import { jwtDecode } from 'jwt-decode';
+import { useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import Comments from '../../../../components/Comments.jsx';
-import Swal from "sweetalert2"
+import Swal from "sweetalert2";
 
-const ProductDetails = ({params}) => {
+const ProductDetails = ({ params }) => {
     const router = useRouter();
     const { id } = useParams();
     const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     const [product, setProduct] = useState(null);
+    const [categories, setCategories] = useState([]); // State for categories
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -36,7 +36,18 @@ const ProductDetails = ({params}) => {
                 setLoading(false);
             }
         };
+
+        const fetchCategories = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/api/category/getAll'); // Replace with your API endpoint
+                setCategories(response.data);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
+
         fetchProduct();
+        fetchCategories(); // Fetch categories
     }, [id]);
 
     const handleAddToCart = async () => {
@@ -152,14 +163,14 @@ const ProductDetails = ({params}) => {
                         </div>
 
                         <div className="flex items-center mb-6">
-                            <div className="flex items-center">
+                            {/* <div className="flex items-center">
                                 {Array.from({ length: 5 }).map((_, i) => (
                                     <span key={i} className="text-yellow-400">
                                         {i < Math.floor(product.rating || 0) ? '★' : '☆'}
                                     </span>
                                 ))}
                                 <span className="ml-2 text-gray-600">({product.rating?.toFixed(1)})</span>
-                            </div>
+                            </div> */}
                             <span className="mx-4 text-gray-300">|</span>
                             <span className="text-gray-600">{product.quantity} in stock</span>
                         </div>
@@ -168,7 +179,9 @@ const ProductDetails = ({params}) => {
 
                         <div className="mb-6">
                             <span className="text-sm text-gray-500">Category:</span>
-                            <span className="ml-2 text-gray-700">{product.category}</span>
+                            <span className="ml-2 text-gray-700">{categories.map((category) =>{
+                                return category.id===product.categoryId?category.name:""
+                            })}</span>
                         </div>
 
                         <button 
