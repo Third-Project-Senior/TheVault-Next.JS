@@ -86,8 +86,8 @@ const Navbar = () => {
 
             {userRole === 'admin' && (
               <Link 
-                href="/Dashboard/Overview" // Update this to the correct route
-                className={`flex items-center hover:text-blue-400 transition-colors ${pathname === '/Dashboard/Overview' ? 'text-blue-400 font-medium' : ''}`}
+                href="/Dashboard/Overview" 
+                className={`flex items-center hover:text-blue-400 transition-colors ${pathname === "/Dashboard/Overview" ? 'text-blue-400 font-medium' : ''}`}
               >
                 Admin Dashboard
               </Link>
