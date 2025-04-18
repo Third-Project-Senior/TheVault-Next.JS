@@ -29,10 +29,15 @@ export default function SideBar() {
       href: '/Dashboard/Orders',
     },
     // {
-    //   title: 'Settings',
-    //   icon: Settings,
-    //   href: '/Dashboard/settings',
+    //   title: 'Users',
+    //   icon: Users,
+    //   href: '/Dashboard/UserList',
     // },
+    {
+      title: 'calendar',
+      icon: LayoutDashboard,
+      href: '/Dashboard/Calendar',
+    },
     {
       title: 'Inentory',
       icon: Package,

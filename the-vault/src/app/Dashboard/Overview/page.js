@@ -7,6 +7,7 @@ import { jwtDecode } from 'jwt-decode';
 import { CreditCard, DollarSign, Package, Users } from "lucide-react";
 import { BarChart } from '@mui/x-charts';
 import ProgressCard from '../ProgressCard';
+import Weather from '@/components/Weather';
 
 function Overview() {
     const [stats, setStats] = useState({
@@ -295,13 +296,14 @@ function Overview() {
                         </div>
                     </div>
 
-                    <div className="lg:col-span-1">
+                    <div className="lg:col-span-1 space-y-8">
                         <ProgressCard
                             progress={(stats.sales/5000*100).toFixed(1)}
                             title="Monthly Target :5000"
                             description="Track your monthly sales progress"
                             onDetailsClick={() => console.log('Details clicked')}
                         />
+                        <Weather />
                     </div>
                 </div>
             </div>
