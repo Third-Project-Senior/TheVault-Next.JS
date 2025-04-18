@@ -31,7 +31,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
-    window.location.href = '/login';
+    window.location.href = '/Login';
   };
 
   return (
@@ -102,8 +102,8 @@ const Navbar = () => {
               </button>
             ) : (
               <Link 
-                href="/login" 
-                className={`flex items-center hover:text-blue-400 transition-colors ${pathname === '/login' ? 'text-blue-400 font-medium' : ''}`}
+                href="/Login" 
+                className={`flex items-center hover:text-blue-400 transition-colors ${pathname === '/Login' ? 'text-blue-400 font-medium' : ''}`}
               >
                 <FiLogIn className="mr-1" /> Login
               </Link>
@@ -149,7 +149,7 @@ const Navbar = () => {
               Logout
             </button>
           ) : (
-            <Link href="/login" className="block hover:bg-gray-700 px-3 py-2 rounded">Login</Link>
+            <Link href="/Login" className="block hover:bg-gray-700 px-3 py-2 rounded">Login</Link>
           )}
         </div>
       </div>
