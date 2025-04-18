@@ -5,6 +5,13 @@
 //   Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis
 // } from "recharts";
 // import { useTheme } from "@/hooks/use-theme";
+// 'use client'
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+// import {
+//   Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis
+// } from "recharts";
+// import { useTheme } from "@/hooks/use-theme";
 
 // import { CreditCard, DollarSign, Package, Users, TrendingUp } from "lucide-react";
 
@@ -13,24 +20,24 @@
 //   const [products, setProducts] = useState([]);
 //   const [users, setUsers] = useState([]);
 
-//   const fetchProducts = async () => {
-//     try {
-//       const res = await axios.get("http://localhost:3000/api/products/");
-//       setProducts(res.data || []);
-//     } catch (error) {
-//       console.error("Failed to fetch products:", error);
-//     }
-//   }
+  const fetchProducts = async () => {
+    try {
+      const res = await axios.get("http://localhost:4000/api/products/");
+      setProducts(res.data || []);
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+    }
+  }
 
 
-//   const fetchUsers = async () => {
-//     try {
-//       const res = await axios.get("http://localhost:3000/api/users/getall");
-//       setUsers(res.data || []);
-//     } catch (error) {
-//       console.error("Failed to fetch users:", error);
-//     }
-//   };
+  const fetchUsers = async () => {
+    try {
+      const res = await axios.get("http://localhost:4000/api/users/getall");
+      setUsers(res.data || []);
+    } catch (error) {
+      console.error("Failed to fetch users:", error);
+    }
+  };
 
 //   useEffect(() => {
 //     fetchProducts();

@@ -9,6 +9,7 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState('');
   const [cartItemsCount, setCartItemsCount] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -26,6 +27,13 @@ const Navbar = () => {
     // Load cart items from localStorage
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
     setCartItemsCount(cart.length);
+
+    // Add scroll listener
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleLogout = () => {
@@ -35,40 +43,41 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-800 text-white shadow-lg sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-3">
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-black/80 backdrop-blur-sm' : 'bg-transparent'}`}>
+      <div className="container mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <div className="text-2xl font-bold hover:text-gray-300 transition-colors">
-            <a href="/" className="flex items-center">
-              <span className="text-blue-400">The</span>Vault
-            </a>
+          <div className="text-3xl font-serif hover:text-gray-300 transition-colors">
+            <Link href="/" className="flex items-center">
+              <span className="text-white">The</span>
+              <span className="text-white ml-1">Vault</span>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <Link 
               href="/" 
-              className={`flex items-center hover:text-blue-400 transition-colors ${pathname === '/' ? 'text-blue-400 font-medium' : ''}`}
+              className={`flex items-center text-white hover:text-gray-300 transition-colors font-serif ${pathname === '/' ? 'border-b-2 border-white' : ''}`}
             >
-              <FiHome className="mr-1" /> Home
+              <FiHome className="mr-2" /> Home
             </Link>
             
             <Link 
               href="/shop" 
-              className={`flex items-center hover:text-blue-400 transition-colors ${pathname === '/shop' ? 'text-blue-400 font-medium' : ''}`}
+              className={`flex items-center text-white hover:text-gray-300 transition-colors font-serif ${pathname === '/shop' ? 'border-b-2 border-white' : ''}`}
             >
-              <FiShoppingCart className="mr-1" /> Shop
+              <FiShoppingCart className="mr-2" /> Shop
             </Link>
 
             {/* Cart Link with Badge */}
             <Link 
               href="/cart" 
-              className={`flex items-center hover:text-blue-400 transition-colors relative ${pathname === '/cart' ? 'text-blue-400 font-medium' : ''}`}
+              className={`flex items-center text-white hover:text-gray-300 transition-colors font-serif relative ${pathname === '/cart' ? 'border-b-2 border-white' : ''}`}
             >
-              <FiShoppingCart className="mr-1" />
+              <FiShoppingCart className="mr-2" />
               {cartItemsCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 bg-white text-black text-xs rounded-full h-5 w-5 flex items-center justify-center font-serif">
                   {cartItemsCount}
                 </span>
               )}
@@ -78,34 +87,34 @@ const Navbar = () => {
             {isLoggedIn && (
               <Link 
                 href="/profile" 
-                className={`flex items-center hover:text-blue-400 transition-colors ${pathname === '/profile' ? 'text-blue-400 font-medium' : ''}`}
+                className={`flex items-center text-white hover:text-gray-300 transition-colors font-serif ${pathname === '/profile' ? 'border-b-2 border-white' : ''}`}
               >
-                <FiUser className="mr-1" /> Profile
+                <FiUser className="mr-2" /> Profile
               </Link>
             )}
 
             {userRole === 'admin' && (
               <Link 
-                href="/Dashboard/Overview" // Update this to the correct route
-                className={`flex items-center hover:text-blue-400 transition-colors ${pathname === '/Dashboard/Overview' ? 'text-blue-400 font-medium' : ''}`}
+                href="/Dashboard/Overview" 
+                className={`flex items-center text-white hover:text-gray-300 transition-colors font-serif ${pathname === "/Dashboard/Overview" ? 'border-b-2 border-white' : ''}`}
               >
-                Admin Dashboard
+                Admin
               </Link>
             )}
 
             {isLoggedIn ? (
               <button 
                 onClick={handleLogout}
-                className="flex items-center hover:text-red-400 transition-colors"
+                className="flex items-center text-white hover:text-gray-300 transition-colors font-serif"
               >
-                <FiLogOut className="mr-1" /> Logout
+                <FiLogOut className="mr-2" /> Logout
               </button>
             ) : (
               <Link 
                 href="/login" 
-                className={`flex items-center hover:text-blue-400 transition-colors ${pathname === '/login' ? 'text-blue-400 font-medium' : ''}`}
+                className={`flex items-center text-white hover:text-gray-300 transition-colors font-serif ${pathname === '/login' ? 'border-b-2 border-white' : ''}`}
               >
-                <FiLogIn className="mr-1" /> Login
+                <FiLogIn className="mr-2" /> Login
               </Link>
             )}
           </div>
@@ -113,10 +122,10 @@ const Navbar = () => {
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-4">
             {/* Mobile Cart Icon with Badge */}
-            <Link href="/cart" className="relative">
+            <Link href="/cart" className="relative text-white">
               <FiShoppingCart className="text-xl" />
               {cartItemsCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 bg-white text-black text-xs rounded-full h-5 w-5 flex items-center justify-center font-serif">
                   {cartItemsCount}
                 </span>
               )}
@@ -132,24 +141,24 @@ const Navbar = () => {
 
         {/* Mobile Navigation (hidden by default) */}
         <div className="md:hidden hidden mt-4 pb-2 space-y-3">
-          <Link href="/" className="block hover:bg-gray-700 px-3 py-2 rounded">Home</Link>
-          <Link href="/shop" className="block hover:bg-gray-700 px-3 py-2 rounded">Shop</Link>
-          <Link href="/cart" className="block hover:bg-gray-700 px-3 py-2 rounded flex items-center">
+          <Link href="/" className="block text-white hover:text-gray-300 px-3 py-2 font-serif">Home</Link>
+          <Link href="/shop" className="block text-white hover:text-gray-300 px-3 py-2 font-serif">Shop</Link>
+          <Link href="/cart" className="block text-white hover:text-gray-300 px-3 py-2 font-serif flex items-center">
             Cart
             {cartItemsCount > 0 && (
-              <span className="ml-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+              <span className="ml-2 bg-white text-black text-xs rounded-full h-5 w-5 flex items-center justify-center font-serif">
                 {cartItemsCount}
               </span>
             )}
           </Link>
-          {isLoggedIn && <Link href="/profile" className="block hover:bg-gray-700 px-3 py-2 rounded">Profile</Link>}
-          {userRole === 'admin' && <Link href="/Dashboard/Overview" className="block hover:bg-gray-700 px-3 py-2 rounded">Admin</Link>}
+          {isLoggedIn && <Link href="/profile" className="block text-white hover:text-gray-300 px-3 py-2 font-serif">Profile</Link>}
+          {userRole === 'admin' && <Link href="/Dashboard/Overview" className="block text-white hover:text-gray-300 px-3 py-2 font-serif">Admin</Link>}
           {isLoggedIn ? (
-            <button onClick={handleLogout} className="block w-full text-left hover:bg-gray-700 px-3 py-2 rounded">
+            <button onClick={handleLogout} className="block w-full text-left text-white hover:text-gray-300 px-3 py-2 font-serif">
               Logout
             </button>
           ) : (
-            <Link href="/login" className="block hover:bg-gray-700 px-3 py-2 rounded">Login</Link>
+            <Link href="/login" className="block text-white hover:text-gray-300 px-3 py-2 font-serif">Login</Link>
           )}
         </div>
       </div>

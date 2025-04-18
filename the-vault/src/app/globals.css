@@ -3,10 +3,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+}
+
 /* Custom styles */
 :root {
   --background: #ffffff;
-  --foreground: #f71a1a;
+  --foreground: #318ce1;
 }
 
 @theme inline {

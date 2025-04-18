@@ -4,16 +4,14 @@ const orderController = {
     // Create a new order
     createOrder: async (req, res) => {
         try {
-            const { userId, totalAmount, shippingAddress, items, paymentMethod } = req.body;
+            const { userId, totalAmount, items, paymentMethod } = req.body;
             
             // Create the order
             const order = await Order.create({
                 userId,
                 totalAmount,
-                shippingAddress,
                 paymentMethod,
-                status: 'pending',
-                paymentStatus: 'pending'
+                
             });
 
             // Create order items
@@ -42,6 +40,47 @@ const orderController = {
             res.status(201).json(completeOrder);
         } catch (error) {
             console.error('Error creating order:', error);
+            res.status(500).json({ error: error.message });
+        }
+    },
+
+    // get all orders
+
+    getOrders: async (req, res) => {
+        try {
+            
+            const orders = await Order.findAll({
+                
+                include: [{
+                    model: Product,
+                    as: 'items',
+                    through: {
+                        attributes: ['quantity', 'price']
+                    }
+                }],
+                order: [['createdAt', 'DESC']]
+            });
+
+            // Transform the data to match the expected format
+            const transformedOrders = orders.map(order => {
+                const plainOrder = order.get({ plain: true });
+                return {
+                    ...plainOrder,
+                    items: plainOrder.items.map(item => ({
+                        quantity: item.OrderItem.quantity,
+                        product: {
+                            id: item.id,
+                            name: item.name,
+                            price: item.OrderItem.price,
+                            image: item.image
+                        }
+                    }))
+                };
+            });
+
+            res.json(transformedOrders);
+        } catch (error) {
+            console.error('Error fetching user orders:', error);
             res.status(500).json({ error: error.message });
         }
     },

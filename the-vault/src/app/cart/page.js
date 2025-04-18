@@ -100,9 +100,14 @@ const Cart = () => {
     
 
     try {
+      // Store cart items in localStorage for order creation after payment
+      localStorage.setItem('pendingOrderItems', JSON.stringify(cartItems));
+      localStorage.setItem('pendingOrderAmount', totalAmount.toString());
+      
       // Step 1: Initiate payment
       const response = await axios.post(`http://localhost:3000/api/payment/payment`, {
         amount: amountInMillimes,
+        cartItems
       });
 
       const paymentUrl = response.data.result?.link;
@@ -111,7 +116,7 @@ const Cart = () => {
       }
 
       // Step 2: Clear the cart
-      // await axios.delete(`http://localhost:3000/api/cart/${userId}`);
+      await axios.delete(`http://localhost:3000/api/cart/clear/${userId}`);
 
       // Step 3: Notify the user and redirect
       Swal.fire({
