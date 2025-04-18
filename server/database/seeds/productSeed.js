@@ -18,7 +18,7 @@ const seedProducts = async () => {
                 description: 'Classic 1950s radio in working condition',
                 price: 299.99, 
                 quantity: 5, 
-                image: 'https://img.freepik.com/psd-gratuit/radio-vintage-est-souvenir-du-passe_632498-24155.jpg?semt=ais_country_boost&w=740',
+                image: 'https://t4.ftcdn.net/jpg/00/82/20/23/360_F_82202359_wY6dzdCzcvPzHa5V6Q9GYyFsELOM7kLu.jpg',
                 categoryId: Electronics.id
             },
             {

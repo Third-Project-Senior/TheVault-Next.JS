@@ -19,7 +19,7 @@ module.exports = {
 
     try {
       const result = await axios.post(url, payload);
-console.log(result , "result");
+console.log( "result",result);
 
       if (result.status === 200) {
         res.status(200).json(result.data); 
