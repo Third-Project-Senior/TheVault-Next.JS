@@ -19,7 +19,7 @@ module.exports = {
 
     try {
       const result = await axios.post(url, payload);
-console.log(result , "result");
+console.log( "result",result);
 
       if (result.status === 200) {
         res.status(200).json(result.data); 
@@ -63,6 +63,13 @@ console.log(result , "result");
       console.log('Flouci Verification Response:', response.data);  
   
       if (response.data.result.status === 'SUCCESS') {
+        await axios.post('http://localhost:3000/api/order', {
+          userId: response.data.result.developer_tracking_id,
+          amount: response.data.result.amount,
+          paymentId: response.data.result.id,
+          status: 'completed',
+        } );
+        console.log("Payment verified and order created successfully.");
         return res.json({ status: 'success' });
       } 
     } catch (error) {
