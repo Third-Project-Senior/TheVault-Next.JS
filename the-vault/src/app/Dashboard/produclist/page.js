@@ -17,6 +17,10 @@ function ProductList() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 8 // Number of items per page
+
   if (!token || jwtDecode(token).role !== 'admin') {
     window.location.href = '/'
   }
@@ -26,8 +30,8 @@ function ProductList() {
       setLoading(true)
       const response = await axios.get('http://localhost:3000/api/product', {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       })
       setProductList(response.data)
       setError(null)
@@ -50,12 +54,12 @@ function ProductList() {
         {
           name: name || undefined,
           price: price || undefined,
-          stock: stock || undefined
+          stock: stock || undefined,
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         }
       )
       setHidden(null)
@@ -71,18 +75,27 @@ function ProductList() {
   const handleDelete = async (productId) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
-        await axios.delete(
-          `http://localhost:3000/api/product/${productId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          }
-        )
+        await axios.delete(`http://localhost:3000/api/product/${productId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         fetchProducts()
       } catch (error) {
         alert('Failed to delete product')
       }
+    }
+  }
+
+  // Pagination logic
+  const totalPages = Math.ceil(productList.length / itemsPerPage)
+  const paginatedProducts = productList
+    .filter((product) => product.name.toLowerCase().includes(search.toLowerCase()))
+    .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page)
     }
   }
 
@@ -99,10 +112,7 @@ function ProductList() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="text-red-500 text-xl font-semibold mb-2">{error}</div>
-          <button
-            onClick={fetchProducts}
-            className="text-blue-500 hover:text-blue-600"
-          >
+          <button onClick={fetchProducts} className="text-blue-500 hover:text-blue-600">
             Try again
           </button>
         </div>
@@ -174,94 +184,113 @@ function ProductList() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {productList
-                  .filter((product) =>
-                    product.name.toLowerCase().includes(search.toLowerCase())
-                  )
-                  .map((product) => (
-                    <tr key={product.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {product.id}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {hidden === product.id ? (
-                          <input
-                            type="text"
-                            defaultValue={product.name}
-                            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                            onChange={(e) => setName(e.target.value)}
-                          />
-                        ) : (
-                          <div className="text-sm font-medium text-gray-900">{product.name}</div>
-                        )}
-                      </td>
-                      <td className="px-6 py-4">
-                        {hidden === product.id ? (
-                          <input
-                            type="text"
-                            defaultValue={product.description}
-                            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                            onChange={(e) => setName(e.target.value)}
-                          />
-                        ) : (
-                          <div className="text-sm text-gray-900">{product.description}</div>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {hidden === product.id ? (
-                          <input
-                            type="number"
-                            defaultValue={product.price}
-                            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                            onChange={(e) => setPrice(e.target.value)}
-                          />
-                        ) : (
-                          <div className="text-sm text-gray-900">${product.price}</div>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {hidden === product.id ? (
-                          <input
-                            type="number"
-                            defaultValue={product.quantity}
-                            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                            onChange={(e) => setStock(e.target.value)}
-                          />
-                        ) : (
-                          <div className="text-sm text-gray-900">{product.quantity}</div>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                        {hidden === product.id ? (
-                          <button
-                            className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                            onClick={() => handleUpdate(product.id)}
-                          >
-                            <Save className="h-4 w-4 mr-1" />
-                            Save
-                          </button>
-                        ) : (
-                          <button
-                            className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                            onClick={() => setHidden(product.id)}
-                          >
-                            <Edit2 className="h-4 w-4 mr-1" />
-                            Edit
-                          </button>
-                        )}
+                {paginatedProducts.map((product) => (
+                  <tr key={product.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{product.id}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {hidden === product.id ? (
+                        <input
+                          type="text"
+                          defaultValue={product.name}
+                          className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                          onChange={(e) => setName(e.target.value)}
+                        />
+                      ) : (
+                        <div className="text-sm font-medium text-gray-900">{product.name}</div>
+                      )}
+                    </td>
+                    <td className="px-6 py-4">
+                      {hidden === product.id ? (
+                        <input
+                          type="text"
+                          defaultValue={product.description}
+                          className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                          onChange={(e) => setName(e.target.value)}
+                        />
+                      ) : (
+                        <div className="text-sm text-gray-900">{product.description}</div>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {hidden === product.id ? (
+                        <input
+                          type="number"
+                          defaultValue={product.price}
+                          className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                          onChange={(e) => setPrice(e.target.value)}
+                        />
+                      ) : (
+                        <div className="text-sm text-gray-900">${product.price}</div>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {hidden === product.id ? (
+                        <input
+                          type="number"
+                          defaultValue={product.quantity}
+                          className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                          onChange={(e) => setStock(e.target.value)}
+                        />
+                      ) : (
+                        <div className="text-sm text-gray-900">{product.quantity}</div>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                      {hidden === product.id ? (
                         <button
-                          className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                          onClick={() => handleDelete(product.id)}
+                          className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                          onClick={() => handleUpdate(product.id)}
                         >
-                          <Trash2 className="h-4 w-4 mr-1" />
-                          Delete
+                          <Save className="h-4 w-4 mr-1" />
+                          Save
                         </button>
-                      </td>
-                    </tr>
-                  ))}
+                      ) : (
+                        <button
+                          className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                          onClick={() => setHidden(product.id)}
+                        >
+                          <Edit2 className="h-4 w-4 mr-1" />
+                          Edit
+                        </button>
+                      )}
+                      <button
+                        className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                        onClick={() => handleDelete(product.id)}
+                      >
+                        <Trash2 className="h-4 w-4 mr-1" />
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
+        </div>
+
+        {/* Pagination Controls */}
+        <div className="flex justify-between items-center mt-6">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 text-sm font-medium rounded-md ${
+              currentPage === 1 ? 'bg-gray-300 text-gray-500' : 'bg-blue-600 text-white hover:bg-blue-700'
+            }`}
+          >
+            Previous
+          </button>
+          <span className="text-sm text-gray-600">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-2 text-sm font-medium rounded-md ${
+              currentPage === totalPages ? 'bg-gray-300 text-gray-500' : 'bg-blue-600 text-white hover:bg-blue-700'
+            }`}
+          >
+            Next
+          </button>
         </div>
 
         {/* Empty State */}
